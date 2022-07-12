@@ -1,0 +1,108 @@
+<resources>
+    <string name="app_name">Mon Agenda Partagé</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--
+    ** HEAD | activity_login labels | HEAD **
+-->
+    <string name="ACTIVITY_LOGIN_PASSWORD_LENTH_FR">Le mot de passe doit contenir au minimum 6 caractères</string>
+    <string name="ACTIVITY_LOGIN_PASSWORD_PATTERN_FR">Le mot de passe saisi doit contenir une lettre</string>
+    <string name="ACTIVITY_LOGIN_EMAIL_PATTERN_FR">Le format de votre adresse mail est invalide</string>
+    <string name="ACTIVITY_LOGIN_WRONG_CREDENTIALS_FR">Connexion impossible, veuillez vérifier vos identifiants</string>
+
+    <!--
+    ** HEAD | activity_register labels | HEAD **
+-->
+    <string name="ACTIVITY_REGISTER_EMAIL_FR">Votre email</string>
+    <string name="ACTIVITY_REGISTER_DUPLICATE_USERNAME">Ce nom d\'utilisateur est déjà utilisé, veuillez en saisir un autre</string>
+    <string name="ACTIVITY_REGISTER_ALL_FIELDS_REQUIRED_FR">Tout les champs sont requis</string>
+    <string name="ACTIVITY_REGISTER_LENGTH_PASSWORD_TOO_SHORT_FR">Le mot de passe doit contenir au minimum 6 caractères</string>
+    <string name="ACTIVITY_REGISTER_LOWER_UPPER_DIGIT_FR">Le mot de passe doit contenir au minimum une lettre minuscule, une lettre Majuscule et un chiffre</string>
+    <string name="ACTIVITY_REGISTER_PASSWORD_IS_DIFFERENT_FR">Le mot de passe de confirmation est différent de celui saisie précedement</string>
+    <string name="ACTIVITY_REGISTER_EMAIL_FORMAT_ERROR_FR">Le format de votre adresse email est invalide. Veuillez réessayer</string>
+    <string name="ACTIVITY_REGISTER_SIGN_UP_SUCCESS_FR">Inscris avec succès ! Bienvenue sur Mon Agenda Partagé</string>
+    <string name="ACTIVITY_REGISTER_CANNOT_SIGN_UP">Vous ne pouvez pas vous enregistrer avec cet email et ce mot de passe !</string>
+    <string name="ACTIVITY_REGISTER_USERNAME_FR">Nom utilisateur</string>
+    <string name="ACTIVITY_REGISTER_FIRSTNAME_FR">Prénom</string>
+    <string name="ACTIVITY_REGISTER_YOUR_FIRSTNAME_FR">Votre prénom</string>
+    <string name="ACTIVITY_REGISTER_LASTNAME_FR">Nom de famille</string>
+    <string name="ACTIVITY_REGISTER_YOUR_LASTNAME_FR">Votre nom de famille</string>
+    <string name="ACTIVITY_REGISTER_BIRTH_DATE_FR">Date de naissance</string>
+    <string name="ACTIVITY_REGISTER_ADDRESS_NUMBER_FR">Adresse | Numéro de voie</string>
+    <string name="ACTIVITY_REGISTER_ADDRESS_NUM_FR">N° de voie</string>
+    <string name="ACTIVITY_REGISTER_ADDRESS_TYPE_FR">Adresse | Type de voie</string>
+    <string name="ACTIVITY_REGISTER_ADDRESS_NAME_FR">Adresse | Nom de la voie</string>
+    <string name="ACTIVITY_REGISTER_ADDRESS_NAME_INPUT_FR">Nom de la voie</string>
+    <string name="ACTIVITY_REGISTER_POSTAL_CODE_FR">Code Postal</string>
+    <string name="ACTIVITY_REGISTER_CITY_NAME_FR">Ville</string>
+    <string name="ACTIVITY_REGISTER_PHONE_NUMBER_FR">Numéro de téléphone</string>
+    <string name="ACTIVITY_REGISTER_YOUR_MAIL_FR">Votre email</string>
+    <string name="ACTIVITY_REGISTER_PASSWORD_FR">Mot de passe</string>
+    <string name="ACTIVITY_REGISTER_YOUR_PASSWORD_FR">Votre mot de passe</string>
+    <string name="ACTIVITY_REGISTER_CONFIRM_YOUR_PASSWORD_FR">Confirmer votre mot de passe</string>
+    <string name="ACTIVITY_REGISTER_MAJOR_CONFIRMATION_FR">Je suis majeur, et j\'accepte les CGU</string>
+    <string name="ACTIVITY_REGISTER_ANIMAL_CONFIRMATION_FR">Je suis majeur, mon animal n\'est pas catégorisé et est en règle</string>
+    <string name="ACTIVITY_REGISTER_SIGN_UP_FR">S\'inscrire</string>
+
+    <!--
+        ** TAIL | activity_register labels | TAIL **
+    -->
+
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+
+
+    <!--
+    ** HEAD | COMMON STRINGS | HEAD **
+    -->
+
+    <string name="GENERIC_YOU_ARE_ALREADY_ON_THE_INTERFACE_FR">Vous êtes déjà sur l\'interface que vous souhaitez consulter</string>
+    <string name="GENERIC_LOG_OUT_FR">Déconnexion</string>
+    <string name="GENERIC_YOU_WANT_TO_LOG_OUT_ARE_YOU_SURE_FR">Vous souhaitez vous déconnecter ?</string>
+    <string name="GENERIC_DELETE_ACCOUNT_FR">Suppression du compte</string>
+    <string name="GENERIC_YOU_WANT_TO_DELETE_YOUR_ACCOUNT_ARE_YOU_SURE_FR">Souhaitez-vous supprimer votre compte ?</string>
+    <string name="GENERIC_YOU_WANT_TO_DELETE_YOUR_ACCOUNT_ARE_YOU_SURE_CONFIRM_FR">Cette action est définitive, êtes-vous sûr ?</string>
+    <string name="GENERIC_DELETE_ACCOUNT_TOAST_REDIRECTION_MSG_FR">Suppression réalisée avec succès ! Vous êtes redirigé sur la page de connexion</string>
+
+    <string name="GENERIC_YES_DELETE_ACCOUNT_FR">Oui, je veux supprimer mon compte</string>
+    <string name="GENERIC_YES_FR">Oui</string>
+    <string name="GENERIC_NO_FR">Non</string>
+    <string name="GENERIC_CANCEL_FR">Annuler</string>
+
+    <!--
+    ** TAIL | COMMON STRINGS | TAIL **
+    -->
+
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+    <!-- ******************************************************************************************************** -->
+
+
+    <string-array name="adressTypeSpinner">
+        <item>Rue</item>
+        <item>Boulevard</item>
+        <item>Avenue</item>
+        <item>Allé</item>
+        <item>Villa</item>
+        <item>Bis</item>
+        <item>Ter</item>
+    </string-array>
+    <string name="title_activity_add_event">AddEventActivity</string>
+    <string name="title_activity_edit_profil_dialogue">EditProfilDialogue</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="title_activity_user_profil_view">UserProfilViewActivity</string>
+
+</resources>

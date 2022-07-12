@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1005002853227",
+    "firebase_url": "https://mon-agenda-partage-8c8dc-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "mon-agenda-partage-8c8dc",
+    "storage_bucket": "mon-agenda-partage-8c8dc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005002853227:android:7efd481fd23771c42ada2e",
+        "android_client_info": {
+          "package_name": "com.etna.mycalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1005002853227-98lfatfetea3vn4v8r9dfi7ibdmakjj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrJEPEmcsgkE7kA0GKF8TCgsu5lLt5Q54"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1005002853227-98lfatfetea3vn4v8r9dfi7ibdmakjj4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1005002853227-1rlb52dgb95edcac7udm1h3hvedb8opk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.monagendapartage"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:title="Accueil"
+        android:icon="@drawable/ic_home_black_24dp"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/calendriers"
+        android:title="Calendriers"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_apps_black_24dp"/>
+
+    <item
+        android:id="@+id/notifications"
+        android:title="Notifications"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_notifications_black_24dp"/>
+
+    <item
+        android:id="@+id/contacts"
+        android:title="Contacts"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_message_black_24dp"/>
+
+    <item
+        android:id="@+id/profil"
+        android:title="Profil"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_person_black_24dp"/>
+</menu>
