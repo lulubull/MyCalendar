@@ -13,14 +13,12 @@ import com.etna.mycalendar.R
 import com.google.android.material.tabs.TabLayout
 import java.util.ArrayList
 
-
 class ProfilUtilisateurFragment(currentUserModel: UserModel) : Fragment() {
-    /** Déclaration de variables  */
     private val currentUserModel: UserModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
-
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

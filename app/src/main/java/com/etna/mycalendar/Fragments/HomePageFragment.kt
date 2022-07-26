@@ -21,18 +21,7 @@ import com.google.firebase.storage.StorageReference
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.fragment_home_page.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [HomePageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomePageFragment : Fragment() {
-    /** Déclaration de variables  */
     private var fuser: FirebaseUser? = null
     private var handleCalendar: CardView? = null
     private var profilCardId: CardView? = null
@@ -46,13 +35,11 @@ class HomePageFragment : Fragment() {
     var reference: DatabaseReference? = null
     private var storageReference: StorageReference? = null
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home_page, container, false)
-        /** Initialisation des variables  */
         image_profile = view.findViewById(R.id.profile_image)
         username = view.findViewById(R.id.username)
         storageReference = FirebaseStorage.getInstance().getReference("uploads")
@@ -95,19 +82,18 @@ class HomePageFragment : Fragment() {
             fragmentTransaction.replace(R.id.content, messagerieFragment)
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
-            // Toast.makeText(getContext(), "Cette section est en cours de développement. Nous l'afficherons très bientôt !", Toast.LENGTH_SHORT).show();
         })
         view.aboutCardViewId.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette section est en cours de développement. Nous l'afficherons très bientôt !",
+                "Cette section est en cours de développement.",
                 Toast.LENGTH_SHORT
             ).show()
         })
         view.parrainageCardViewId.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette section est en cours de développement. Nous l'afficherons très bientôt !",
+                "Cette section est en cours de développement.",
                 Toast.LENGTH_SHORT
             ).show()
         })

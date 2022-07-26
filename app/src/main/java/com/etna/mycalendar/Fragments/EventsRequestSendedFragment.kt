@@ -20,7 +20,6 @@ import com.google.firebase.database.*
 import java.util.ArrayList
 
 class EventsRequestSendedFragment : Fragment() {
-    /** Déclaration de variables  */
     private var listViewRequestsSended: RecyclerView? = null
     private var requestSendedAdapter: EventsRequestSendedAdapter? = null
     private var mUserModels: MutableList<UserModel>? = null
@@ -33,9 +32,7 @@ class EventsRequestSendedFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_events_request_sended, container, false)
-        /** Initialisation  */
         listViewRequestsSended = view.findViewById(R.id.listView)
         listViewRequestsSended?.setHasFixedSize(true)
         listViewRequestsSended?.setLayoutManager(LinearLayoutManager(context))
@@ -54,7 +51,6 @@ class EventsRequestSendedFragment : Fragment() {
                 }
                 _readSendedRequests()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         mSwipeRefreshLayout?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
@@ -62,8 +58,7 @@ class EventsRequestSendedFragment : Fragment() {
                 _readSendedRequests()
             }
         })
-        /** Contrôle lorsque le bouton back du téléphone est appuyé  */
-        // This callback will only be called when MyFragment is at least Started.
+        // callback recall last frag (btn back)
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
@@ -76,7 +71,7 @@ class EventsRequestSendedFragment : Fragment() {
     }
 
     /**
-     * Permet de récuperer les demandes et les envoyer à l'adapter
+     * get frends rquest and push to adapter
      */
     private fun _readSendedRequests() {
         mUserModels = ArrayList<UserModel>()
@@ -97,7 +92,6 @@ class EventsRequestSendedFragment : Fragment() {
                 listViewRequestsSended?.setAdapter(requestSendedAdapter)
                 mSwipeRefreshLayout?.setRefreshing(false)
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }

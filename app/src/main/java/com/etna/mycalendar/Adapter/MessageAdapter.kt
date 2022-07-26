@@ -20,12 +20,6 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
     private val imageurl: String = imageurl
     private var fuser: FirebaseUser? = null
 
-    /**
-     * Création du view holder. On récupère les item à injecter
-     * @param parent
-     * @param viewType
-     * @return
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return if (viewType == MSG_TYPE_RIGHT) {
             val view: View =
@@ -38,11 +32,6 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
         }
     }
 
-    /**
-     * Fonction permettant de contrôler chaque élément de nos vues xml
-     * @param holder
-     * @param position
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chatModel: ChatModel? = mChatModel?.get(position)
         holder.show_message.setText(chatModel?.message)
@@ -62,17 +51,10 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
         }
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mChatModel
-     * @return
-     */
     override fun getItemCount(): Int {
         return mChatModel!!.size
     }
 
-    /**
-     * Classe ViewHolder permettant de faire le lien entre l'adaptateur et la classe onBindViewHolder
-     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var show_message: TextView
         var profile_image: ImageView
@@ -85,11 +67,6 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
         }
     }
 
-    /**
-     * Permet de récuperer le type de message à afficher (Utilisateur ou Destinataire)
-     * @param position
-     * @return
-     */
     override fun getItemViewType(position: Int): Int {
         fuser = FirebaseAuth.getInstance().getCurrentUser()
         return if (mChatModel?.get(position)?.sender.equals(fuser?.getUid())) {
@@ -100,11 +77,7 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
     }
 
     companion object {
-        /** Déclaration de variables  */
         const val MSG_TYPE_LEFT = 0
         const val MSG_TYPE_RIGHT = 1
     }
-
-    /** Constructeur  */
-
 }

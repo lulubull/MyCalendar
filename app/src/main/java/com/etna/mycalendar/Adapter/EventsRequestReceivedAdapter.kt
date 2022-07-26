@@ -23,27 +23,15 @@ import java.util.HashMap
 
 class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserModel>?) :
     RecyclerView.Adapter<EventsRequestReceivedAdapter.ViewHolder?>() {
-    /** Déclaration de variables  */
     private val mContext: Context? = mContext
     private val mUserModels: List<UserModel>? = mUserModels
 
-    /**
-     * Création du view holder. On récupère les item à injecter
-     * @param parent
-     * @param viewType
-     * @return
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext)
             .inflate(R.layout.events_request_received_item, parent, false)
         return ViewHolder(view)
     }
 
-    /**
-     * Fonction permettant de contrôler chaque élément de nos vues xml
-     * @param holder
-     * @param position
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel: UserModel = mUserModels!![position]
         val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().getCurrentUser()
@@ -69,8 +57,7 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                     Log.d("dsValue", dataSnapshot.getValue().toString())
                     if (requestType == "received") {
                         holder.acceptButton.setBackgroundResource(R.drawable.bg_button_accepted_ui)
-                        holder.acceptButton.setOnClickListener { // Si il accepte il faut passer le status dans from de received à accepted
-                            // du coup
+                        holder.acceptButton.setOnClickListener {
                             val hashMapFrom = HashMap<String, String>()
                             hashMapFrom["requestType"] = "accepted"
                             referenceFrom.setValue(hashMapFrom)
@@ -160,15 +147,6 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
         })
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mUserModels
-     * @return
-     */
-
-
-    /**
-     * Fonction permettant de récuperer les éléments XML de l'item 'events_request_received_item.xml'
-     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var username: TextView
         var profile_image: ImageView
@@ -186,7 +164,4 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
     override fun getItemCount(): Int {
         return mUserModels?.size!!
     }
-
-    /** Constructeur  */
-
 }

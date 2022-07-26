@@ -23,7 +23,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
-
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -49,11 +48,7 @@ import com.google.firebase.database.*
 import java.io.IOException
 import java.util.ArrayList
 
-
 class DisplayUsersFragment : Fragment() {
-/** Constructeur de la classe DisplayUsersFragment  */
-
-    /** Déclaration variables  */
     private var aroundMe: Button? = null
     private var filterButton: Button? = null
     private var scrollView: NestedScrollView? = null
@@ -66,19 +61,11 @@ class DisplayUsersFragment : Fragment() {
     private var startRelativeLayout: LinearLayout? = null
     private var noResultsLayout: SwipeRefreshLayout? = null
 
-    /**
-     * onCreateView | utilisée à la place de onCreate. Pourquoi ? Nous sommes sur un fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_display_users, container, false)
-        /** Initialisation des variables  */
         aroundMe = view.findViewById(R.id.aroundMe)
         filterButton = view.findViewById(R.id.filterButton)
         scrollView = view.findViewById(R.id.scrollView)
@@ -92,7 +79,6 @@ class DisplayUsersFragment : Fragment() {
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items)
         mProgressView = view.findViewById(R.id.progressBar)
         mUsers = ArrayList<UserModel?>()
-        /** Gestion du contrôle sur le bouton 'Liste'/'Carte'  */
         aroundMe?.setOnClickListener(
             View.OnClickListener {
                 if (aroundMe?.getText().toString() == "Carte") {
@@ -119,7 +105,6 @@ class DisplayUsersFragment : Fragment() {
                     }
                 }
             })
-        /** Contrôle sur le bouton 'Filtre'  */
         filterButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
@@ -130,9 +115,9 @@ class DisplayUsersFragment : Fragment() {
         noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
         mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
 
-        // This callback will only be called when MyFragment is at least Started.
+        // callback for last frag used
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (scrollView?.getScrollY()!! > 0) {
                         scrollView?.smoothScrollTo(0, 0)
@@ -144,15 +129,8 @@ class DisplayUsersFragment : Fragment() {
         return view
     }
 
-    /**
-     * Fonction permettant de récuperer tout les Utilisateurs
-     * Lecture sur la table 'Users'
-     */
     private fun _readUsers() {
-        //_showProgress(true)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        /** Reference sur la table Users  */
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -167,17 +145,12 @@ class DisplayUsersFragment : Fragment() {
                 gridViewUsers?.layoutManager = GridLayoutManager(context, 2)
                 DisplayUsersAdapter(context, mUsers).also { displayUsersAdapter = it }
                 gridViewUsers?.adapter = displayUsersAdapter
-                /** On place tout les utilisateurs sur une map  */
                 _placeMarkersOnMap()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     * Fonction permettant d'affiche les utilisateurs sur une carte Google Map
-     */
     private fun _placeMarkersOnMap() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
@@ -223,7 +196,6 @@ class DisplayUsersFragment : Fragment() {
                                 )
                             }
                         }
-                        //_showProgress(false)
                         mSwipeRefreshLayout?.isRefreshing = false
                         noResultsLayout?.isRefreshing = false
                         noResultsLayout?.visibility = View.GONE
@@ -240,28 +212,19 @@ class DisplayUsersFragment : Fragment() {
                     }
                 })
             } else {
-                Log.d("noResult", "ok ! ::::::")
                 mProgressView!!.visibility = View.GONE
                 mSwipeRefreshLayout!!.visibility = View.GONE
-                // startRelativeLayout.setVisibility(View.VISIBLE);
                 noResultsLayout!!.visibility = View.VISIBLE
                 noResultsLayout!!.isRefreshing = false
             }
         }
     }
 
-    /**
-     * Fonction permettant de récuperer la latitude et la longitude d'une adresse postale
-     * @param context
-     * @param strAddress
-     * @return
-     */
     fun getLocationFromAddress(context: Context?, strAddress: String?): LatLng? {
         val coder = Geocoder(context)
         val address: List<Address>?
         var p1: LatLng? = null
         try {
-            // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5)
             if (address == null) {
                 return null
@@ -274,12 +237,6 @@ class DisplayUsersFragment : Fragment() {
         return p1
     }
 
-    /**
-     * Fonction permettant de déssiner l'icône qui sera affichée sur Google Maps
-     * @param context
-     * @param vectorResId
-     * @return
-     */
     private fun bitmapDescriptorFromVector(context: Context?, vectorResId: Int): BitmapDescriptor {
         val vectorDrawable = ContextCompat.getDrawable(requireContext(), vectorResId)
         vectorDrawable!!.setBounds(
@@ -299,8 +256,8 @@ class DisplayUsersFragment : Fragment() {
     }
 
     /**
-     * Fait apparaître le Spinner/Loader et cache différentes interfaces
-*/
+     * print loader
+    */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun _showProgress(show: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

@@ -21,24 +21,14 @@ import java.lang.StringBuilder
 
 class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?) :
     RecyclerView.Adapter<MyEventsAdapter.ViewHolder>() {
-    /** Déclaration de variables  */
     private var mContext: Context? = mContext
-
     private var mEvents: MutableList<MyEventsModel?>? = mEvents
-
     private val mUsernames: List<String>? = null
 
-    /**
-     * Création du view holder. On récupère les item à injecter
-     * @param parent
-     * @param viewType
-     * @return
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.events_item, parent, false)
         return ViewHolder(view)
     }
-
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val eventsModel: MyEventsModel? = mEvents?.get(position)
@@ -61,8 +51,7 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
         holder.descriptionTextView.visibility = View.VISIBLE
         holder.descriptionTextView.text = "Description de l'événement :"
 
-        // Si l'évenement est partagé
-
+        //shared event
         builder.setLength(0)
         Log.d("contentBuilder3", "" + builder.toString())
         holder.sharedWithLinearLayout.visibility = View.VISIBLE
@@ -80,17 +69,10 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
 
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mEvents
-     * @return
-     */
     override fun getItemCount(): Int {
         return mEvents!!.size
     }
 
-    /**
-     * Fonction permettant de récuperer les éléments XML de l'item 'events_item.xml'
-     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var dateDebut: TextView
         var dateFin: TextView
@@ -158,6 +140,4 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
-    // private StringBuilder builder;
-    /** Constructeur  */
 }

@@ -28,11 +28,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.ArrayList
 
-
 class DisplayFoyerFragment
-/** Constructeur de la classe DisplayUsersFragment  */
     : Fragment() {
-    /** Déclaration variables  */
     private var filterButton: Button? = null
     private var scrollView: NestedScrollView? = null
     private var frameLayoutMap: FrameLayout? = null
@@ -46,19 +43,11 @@ class DisplayFoyerFragment
     private var noResultsLayout: SwipeRefreshLayout? = null
     private var userIdToList: String? = null
 
-    /**
-     * onCreateView | utilisée à la place de onCreate. Pourquoi ? Nous sommes sur un fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view: View = inflater.inflate(R.layout.fragment_display_foyer, container, false)
-        /** Initialisation des variables  */
         filterButton = view.findViewById(R.id.filterButton)
         scrollView = view.findViewById(R.id.scrollView)
         frameLayoutMap = view.findViewById(R.id.frameLayoutMap)
@@ -73,20 +62,17 @@ class DisplayFoyerFragment
         userIdToList = ""
         mUsers = ArrayList<UserModel?>()
         mUsersId = ArrayList()
-        /** Contrôle sur le bouton 'Filtre'  */
         filterButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette fonctionnalitée sera bientôt disponible ! Nos développeurs se concentre dessus",
+                "Pas encore dev",
                 Toast.LENGTH_SHORT
             ).show()
         })
         noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
         mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
-
-        // This callback will only be called when MyFragment is at least Started.
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (scrollView?.getScrollY()!! > 0) {
                         scrollView?.smoothScrollTo(0, 0)
@@ -101,18 +87,13 @@ class DisplayFoyerFragment
     private fun _readUsers() {
         mUsers!!.clear()
         mUsersId!!.clear()
-        //_showProgress(true)
         _getFromTable()
     }
 
-    /**
-     * Fonction permettant d'afficher les Utilisateurs
-     */
     private fun _placeUsersOnList() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mUsers!!.size > 0) {
-                //_showProgress(false)
                 mSwipeRefreshLayout!!.isRefreshing = false
                 noResultsLayout!!.isRefreshing = false
                 noResultsLayout!!.visibility = View.GONE
@@ -126,7 +107,7 @@ class DisplayFoyerFragment
     }
 
     /**
-     * Fait apparaître le Spinner/Loader et cache différentes interfaces
+     * Print loader
      */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun _showProgress(show: Boolean) {
@@ -202,8 +183,6 @@ class DisplayFoyerFragment
 
     private fun _getFinalUsers() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        /** Reference sur la table Users  */
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -221,7 +200,6 @@ class DisplayFoyerFragment
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
@@ -230,7 +208,6 @@ class DisplayFoyerFragment
         gridViewUsers!!.layoutManager = GridLayoutManager(context, 2)
         displayFoyerAdapter = context?.let { DisplayFoyerAdapter(it, mUsers) }
         gridViewUsers!!.adapter = displayFoyerAdapter
-        /** On place tout les Utilisateurs sur une liste  */
         _placeUsersOnList()
     }
 }

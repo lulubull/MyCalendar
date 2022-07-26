@@ -17,14 +17,12 @@ import com.etna.mycalendar.Models.UserModel
 import com.etna.mycalendar.Notifications.Token
 import com.etna.mycalendar.R
 import com.google.firebase.auth.FirebaseAuth
-
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.iid.FirebaseInstanceId
 import java.util.ArrayList
 
 class ChatsFragment : Fragment() {
-    /** Déclaration de variables  */
     private var recyclerView: RecyclerView? = null
     private var userAdapter: UserAdapter? = null
     private var mUserModels: MutableList<UserModel?>? = null
@@ -76,19 +74,12 @@ class ChatsFragment : Fragment() {
         return view
     }
 
-    /**
-     * Permet de rafraichir le token de l'utilisateur
-     * @param token
-     */
     private fun _updateToken(token: String) {
         val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
         val token1 = Token(token)
         reference.child(fuser?.getUid().toString()).setValue(token1)
     }
 
-    /**
-     *
-     */
     private fun _chatList() {
         mUserModels = ArrayList<UserModel?>()
         reference = FirebaseDatabase.getInstance().getReference("Users")
@@ -112,10 +103,6 @@ class ChatsFragment : Fragment() {
         })
     }
 
-    /**
-     * Permet de chercher un utilisateur
-     * @param s
-     */
     private fun _searchUsers(s: String?) {
         val query: Query =
             FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
@@ -140,9 +127,6 @@ class ChatsFragment : Fragment() {
         })
     }
 
-    /**
-     *
-     */
     private fun _getUserChatList() {
         reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser?.getUid().toString())
         reference?.addValueEventListener(object : ValueEventListener {
@@ -154,15 +138,10 @@ class ChatsFragment : Fragment() {
                 }
                 _chatList()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     *
-     * @param outState
-     */
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString("searchUserParced", searchUserParced)

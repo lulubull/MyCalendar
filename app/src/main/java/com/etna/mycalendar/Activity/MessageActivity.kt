@@ -1,4 +1,5 @@
 package com.etna.mycalendar.Activity
+
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText

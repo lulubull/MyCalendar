@@ -31,9 +31,7 @@ import com.google.firebase.database.*
 import java.util.ArrayList
 
 class EventsFragment
-/** Constructeur de la classe EventsFragment  */
     : Fragment() {
-    /** Déclaration variables  */
     private var filterButton: Button? = null
     private var addEventButton: Button? = null
     private var scrollView: NestedScrollView? = null
@@ -45,19 +43,11 @@ class EventsFragment
     private var startRelativeLayout: LinearLayout? = null
     private var noResultsLayout: SwipeRefreshLayout? = null
 
-    /**
-     * onCreateView | utilisée à la place de onCreate. Pourquoi ? Nous sommes sur un fragment
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_events, container, false)
-        /** Initialisation des variables  */
         filterButton = view.findViewById(R.id.filterButton)
         addEventButton = view.findViewById(R.id.addEventButton)
         scrollView = view.findViewById(R.id.scrollView)
@@ -70,11 +60,10 @@ class EventsFragment
         mSwipeRefreshLayout = view.findViewById(R.id.swiperefresh_items)
         mProgressView = view.findViewById(R.id.progressBar)
         mEvents = ArrayList()
-        /** Contrôle sur le bouton 'Filtre'  */
         filterButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette fonctionnalitée sera bientôt disponible ! Nos développeurs se concentre dessus",
+                "Cette fonctionnalitée sera bientôt disponible",
                 Toast.LENGTH_SHORT
             ).show()
         })
@@ -84,10 +73,8 @@ class EventsFragment
         })
         noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
         mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
-
-        // This callback will only be called when MyFragment is at least Started.
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (scrollView?.getScrollY()!! > 0) {
                         scrollView?.smoothScrollTo(0, 0)
@@ -99,14 +86,8 @@ class EventsFragment
         return view
     }
 
-    /**
-     * Fonction permettant de récuperer tout les Evenements de l'utilisateur
-     */
     private fun _readEvents() {
-        //_showProgress(true)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        /** Reference sur la table Events  */
         val reference = FirebaseDatabase.getInstance().getReference("Events").child(
             firebaseUser?.uid.toString()
         )
@@ -118,7 +99,6 @@ class EventsFragment
                     val eventModel = snapshot.getValue(MyEventsModel::class.java)
                     Log.v(ContentValues.TAG, "les info user=" + eventModel)
                     mEvents?.add(eventModel)
-
                 }
                 myEventsAdapter = MyEventsAdapter(context, mEvents)
                 gridEvents?.adapter = myEventsAdapter
@@ -131,14 +111,10 @@ class EventsFragment
         })
     }
 
-    /**
-     * Fonction permettant d'afficher les evenements
-     */
     private fun _placeEventsOnList() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mEvents != null) {
-                //_showProgress(false)
                 mSwipeRefreshLayout?.isRefreshing = false
                 noResultsLayout?.isRefreshing = false
                 noResultsLayout?.visibility = View.GONE
@@ -152,8 +128,8 @@ class EventsFragment
     }
 
     /**
-     * Fait apparaître le Spinner/Loader et cache différentes interfaces
-*/
+     * print loader
+     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun _showProgress(show: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

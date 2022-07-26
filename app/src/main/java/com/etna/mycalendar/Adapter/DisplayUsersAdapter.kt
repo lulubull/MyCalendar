@@ -1,4 +1,5 @@
 package com.etna.mycalendar.Adapter
+
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -32,17 +33,15 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel: UserModel? = mUserModels?.get(position)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-        // Demande d'ami envoyé par utilisateur courant ==> utilisateur selectionné
+        // frend requests
         val referenceTo = FirebaseDatabase.getInstance().getReference("Users").child(
             firebaseUser!!.uid
         ).child("requests").child("to").child(userModel?.id.toString())
-        // Demande d'ami reçu par utilisateur selectionné <== utilisateur courant
         val referenceFrom =
             FirebaseDatabase.getInstance().getReference("Users").child(userModel?.id.toString())
                 .child("requests").child("from").child(
                     firebaseUser.uid
                 )
-        // Demande d'ami envoyé par l'utilisateur selectionné ==> utilisateur courant
         val referenceToUser =
             FirebaseDatabase.getInstance().getReference("Users").child(userModel?.id.toString())
                 .child("requests").child("to").child(
@@ -60,7 +59,6 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
         } else {
             Glide.with(mContext!!).load(userModel?.imageURL).into(holder.profile_image)
         }
-        // Firebase : Demande d'ami envoyé par utilisateur courant ==> utilisateur selectionné
         referenceTo.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (dataSnapshot.value != null) {
@@ -68,7 +66,7 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
                         String::class.java
                     )
                     if (requestType == "send") {
-                        popup.menu.getItem(1).title = "Demande envoyée !"
+                        popup.menu.getItem(1).title = "Demande envoyée"
                         popup.menu.getItem(1).isEnabled = false
                         popup.setOnMenuItemClickListener(PopupMenu.OnMenuItemClickListener { item ->
                             when (item.itemId) {
@@ -155,7 +153,6 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
                         true
                     })
                 }
-                // Firebase : Demande d'ami envoyé par l'utilisateur selectionné ==> utilisateur courant
                 referenceToUser.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         if (dataSnapshot.value != null) {
@@ -251,7 +248,6 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
                             })
                         }
                     }
-
                     override fun onCancelled(databaseError: DatabaseError) {}
                 })
             }
@@ -261,17 +257,10 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
         holder.imageButton.setOnClickListener { popup.show() }
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mUserModels
-     * @return
-     */
     override fun getItemCount(): Int {
         return mUserModels?.size!!
     }
 
-    /**
-     * Fonction permettant de récuperer les éléments XML de l'item 'user_to_find_item.xml'
-     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var firstAndLastname: TextView
         var whichCountry: TextView
@@ -285,7 +274,4 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
             whichCountry = itemView.findViewById(R.id.whichCountry)
         }
     }
-
-    /** Constructeur  */
-
 }

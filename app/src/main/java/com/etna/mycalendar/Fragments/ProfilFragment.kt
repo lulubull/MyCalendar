@@ -30,24 +30,10 @@ import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 import kotlinx.android.synthetic.main.fragment_profil.view.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfilFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ProfilFragment(currentUserModel: UserModel) : Fragment() {
-    /** Déclaration de variables  */
     private var editPhoneNumberProfilImageView: ImageView? = null
-    /** Déclaration de variables  */
     private  var editAdressProfilImageView:android.widget.ImageView? = null
-    /** Déclaration de variables  */
     private  var editCountryProfilImageView:android.widget.ImageView? = null
-    /** Déclaration de variables  */
     private  var editZipCodeProfilImageView:android.widget.ImageView? = null
     private lateinit var dataSnapshot :DataSnapshot
     private var reference: DatabaseReference? = null
@@ -68,22 +54,16 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_profil, container, false)
-        /** Initialisation des variables  */
         storageReference = FirebaseStorage.getInstance().getReference("uploads")
         fuser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser?.uid.toString())
-
-
         Log.v(TAG, "les info user=" +reference)
 
-        /** On récupère les informations de l'utilisateur  */
         reference?.addListenerForSingleValueEvent(object :ValueEventListener{
             @SuppressLint("SetTextI18n")
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-
                     val userModel = dataSnapshot.getValue(UserModel::class.java)
                     Log.v(TAG, "les info user=" + userModel)
                     view.usernameTextView.setText(userModel?.prenom.toString() + " " + userModel?.nom)
@@ -96,10 +76,8 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
                     codePostalTextView.setText(userModel?.codePostal.toString() )
                     if (userModel?.imageURL?.equals("default") == true) {
                         image_profile?.setImageResource(R.mipmap.ic_launcher)
-
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         image_profile?.setOnClickListener(View.OnClickListener { openImage() })
@@ -145,7 +123,7 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
             fragmentManager?.let { it1 -> editProfilDialog.show(it1, "EditProfilDialog") }
         })
 
-        // **** SUPRESSION DU COMPTE DES UTILISATEURS ****
+        // delete acount
         view.deleteAccountButton?.setOnClickListener(View.OnClickListener {
             AlertDialog.Builder((context)!!)
                 .setTitle(getString(R.string.GENERIC_DELETE_ACCOUNT_FR))
@@ -160,21 +138,18 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
                             getString(R.string.GENERIC_YES_DELETE_ACCOUNT_FR)
                         ) { dialogInterface, i ->
                             if (fuser != null) {
-                                fuser!!.delete() // On supprime le compte de l'utilisateur
+                                fuser!!.delete()
                                     .addOnCompleteListener { task ->
                                         if (task.isSuccessful) {
-                                            // On suprimme les datas de l'utilisateur dans la RealTime Database
                                             FirebaseDatabase.getInstance().getReference("Users")
                                                 .child(
                                                     fuser!!.uid
                                                 ).removeValue()
-                                            // On affiche un toast de confirmation de suppression du compte
                                             Toast.makeText(
                                                 context,
                                                 getString(R.string.GENERIC_DELETE_ACCOUNT_TOAST_REDIRECTION_MSG_FR),
                                                 Toast.LENGTH_SHORT
                                             ).show()
-                                            // Redirection vers la page de login
                                             startActivity(
                                                 Intent(
                                                     activity,
@@ -198,7 +173,7 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         return view
     }
 
-    /** Permet d'ouvrir la gallerie de l'utilisateur  */
+    /** open lst users  */
     private fun openImage() {
         val intent = Intent()
         intent.type = "image/*"
@@ -206,61 +181,12 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         startActivityForResult(intent, IMAGE_REQUEST)
     }
 
-    /**
-     * Permet de récupérer l'extension du fichier
-     * @param uri
-     */
     private fun getFileExtension(uri: Uri): String? {
         val contentResolver = context!!.contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
     }
 
-    /** Fonction permettant d'uploader la nouvelle image de l'utilisateur sur Firebase Storage  */
-   /**private fun uploadImage() {
-        val pd = ProgressDialog(context)
-        pd.setMessage("Uploading")
-        pd.show()
-        if (imageUri != null) {
-            val fileReference = storageReference!!.child(
-                System.currentTimeMillis()
-                    .toString() + "." + getFileExtension(imageUri!!)
-            )
-            uploadTask = fileReference.putFile(imageUri!!)
-            (uploadTask as UploadTask).continueWithTask(Continuation<UploadTask.TaskSnapshot?, Task<Uri?>?> { task ->
-                if (!task.isSuccessful) {
-                    throw (task.exception)!!
-                }
-                fileReference.downloadUrl
-            }).addOnCompleteListener(OnCompleteListener<Uri> { task ->
-                if (task.isSuccessful) {
-                    val downloadUri = task.result
-                    val mUri = downloadUri.toString()
-                    reference =
-                        FirebaseDatabase.getInstance().getReference("Users").child(fuser!!.uid)
-                    val map = HashMap<String, Any>()
-                    map["imageURL"] = mUri
-                    reference!!.updateChildren(map)
-                    pd.dismiss()
-                } else {
-                    Toast.makeText(context, "Upload echoué !", Toast.LENGTH_SHORT).show()
-                    pd.dismiss()
-                }
-            }).addOnFailureListener(OnFailureListener { e ->
-                Toast.makeText(context, e.message, Toast.LENGTH_SHORT).show()
-                pd.dismiss()
-            })
-        } else {
-            Toast.makeText(context, "Aucune image n'a été séléctionné", Toast.LENGTH_SHORT).show()
-        }
-    }**/
-
-    /**
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
-     */
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if ((requestCode == IMAGE_REQUEST) && (resultCode == Activity.RESULT_OK

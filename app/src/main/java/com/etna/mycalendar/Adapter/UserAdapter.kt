@@ -13,35 +13,22 @@ import com.etna.mycalendar.Activity.MessageActivity
 import com.etna.mycalendar.Models.ChatModel
 import com.etna.mycalendar.Models.UserModel
 import com.etna.mycalendar.R
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 
 class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, ischat: Boolean) :
     RecyclerView.Adapter<UserAdapter.ViewHolder?>() {
-    /** Déclaration de variables  */
     private val mContext: Context = mContext
     private val mUserModels: MutableList<UserModel?>? = mUserModels
     private val ischat: Boolean = ischat
     private var theLastMessage: String? = null
 
-    /**
-     * Création du view holder. On récupère les item à injecter
-     * @param parent
-     * @param viewType
-     * @return
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View = LayoutInflater.from(mContext).inflate(R.layout.user_item, parent, false)
         return ViewHolder(view)
     }
 
-    /**
-     * Fonction permettant de contrôler chaque élément de nos vues xml
-     * @param holder
-     * @param position
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel: UserModel? = mUserModels?.get(position)
         holder.username.setText(userModel?.username)
@@ -74,10 +61,6 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
         })
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mUserModels
-     * @return
-     */
     override fun getItemCount(): Int {
         return mUserModels?.size!!
     }
@@ -89,9 +72,6 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
         val img_off: ImageView
         val last_msg: TextView
 
-        /**
-         * Classe ViewHolder permettant de faire le lien entre l'adaptateur et la classe onBindViewHolder
-         */
         init {
             username = itemView.findViewById<TextView>(R.id.username)
             profile_image = itemView.findViewById(R.id.profile_image)
@@ -101,11 +81,6 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
         }
     }
 
-    /**
-     * Fonction permettant de récuperer et d'afficher le dernier message envoyé
-     * @param userid
-     * @param last_msg
-     */
     private fun lastMessage(userid: String, last_msg: TextView) {
         theLastMessage = "default"
         val firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().getCurrentUser()
@@ -129,11 +104,7 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
                 }
                 theLastMessage = "default"
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
-
-    /** Constructeur  */
-
 }
