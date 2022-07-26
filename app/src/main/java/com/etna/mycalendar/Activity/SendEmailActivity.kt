@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -7,9 +6,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import com.etna.mycalendar.R
-
-
-
 
 class SendEmailActivity : AppCompatActivity() {
     private var eTo: EditText? = null
@@ -21,15 +17,11 @@ class SendEmailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_send_email)
-
-        // emailUser = (String) getIntent().getSerializableExtra("emailUser");
         eTo = findViewById(R.id.txtTo)
         eSubject = findViewById(R.id.txtSub)
         eMsg = findViewById(R.id.txtMsg)
         btn = findViewById(R.id.btnSend)
         btnClose = findViewById(R.id.closeButton)
-
-        // eTo.setText(emailUser);
         btnClose?.setOnClickListener(View.OnClickListener { onBackPressed() })
         btn?.setOnClickListener(View.OnClickListener {
             val it = Intent(Intent.ACTION_SEND)

@@ -1,6 +1,4 @@
 package com.etna.mycalendar.Activity
-
-
 import android.os.Bundle
 import android.util.Log
 import android.widget.EditText
@@ -32,10 +30,7 @@ import retrofit2.Response
 import java.util.ArrayList
 import java.util.HashMap
 
-
 class MessageActivity : AppCompatActivity() {
-
-    /** Déclaration de variables  */
     var profile_image: CircleImageView? = null
     var username: TextView? = null
     var fuser: FirebaseUser? = null
@@ -45,11 +40,9 @@ class MessageActivity : AppCompatActivity() {
     var messageAdapter: MessageAdapter? = null
     var mChatModel: MutableList<ChatModel?>? = null
     var recyclerView: RecyclerView? = null
-
     var seenListener: ValueEventListener? = null
     var userid: String? = null
     var apiService: APIService? = null
-
     var notify = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,12 +50,10 @@ class MessageActivity : AppCompatActivity() {
         setContentView(R.layout.activity_message)
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
         val toolbar: Toolbar = findViewById<Toolbar>(R.id.toolbar)
-
         getSupportActionBar()?.setTitle("")
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressed() }
         apiService = Client.getClient("https://fcm.googleapis.com/")?.create(APIService::class.java)
-        /** Initialisation des variables  */
         recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
         recyclerView!!.setHasFixedSize(true)
         val linearLayoutManager = LinearLayoutManager(getApplicationContext())
@@ -83,7 +74,7 @@ class MessageActivity : AppCompatActivity() {
             } else {
                 Toast.makeText(
                     this@MessageActivity,
-                    "Vous ne pouvez pas envoyer un message vide !",
+                    "Le message est vide",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -102,16 +93,11 @@ class MessageActivity : AppCompatActivity() {
                 }
                 readMessages(fuser!!.uid, userid!!, userModel!!.imageURL)
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         seenMessage(userid!!)
     }
 
-    /**
-     *
-     * @param userid
-     */
     open fun seenMessage(userid: String) {
         reference = FirebaseDatabase.getInstance().getReference("Chats")
         seenListener = reference!!.addValueEventListener(object : ValueEventListener {
@@ -127,17 +113,10 @@ class MessageActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     *
-     * @param sender
-     * @param receiver
-     * @param message
-     */
     open fun sendMessage(sender: String, receiver: String, message: String) {
         var reference = FirebaseDatabase.getInstance().reference
         val hashMap = HashMap<String, Any>()
@@ -158,7 +137,6 @@ class MessageActivity : AppCompatActivity() {
                     chatRef.child("id").setValue(userid)
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         chatRef2.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -167,7 +145,6 @@ class MessageActivity : AppCompatActivity() {
                     chatRef2.child("id").setValue(fuser!!.uid)
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser!!.uid)
@@ -179,17 +156,10 @@ class MessageActivity : AppCompatActivity() {
                 }
                 notify = false
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     *
-     * @param receiver
-     * @param username
-     * @param message
-     */
     open fun sendNotification(receiver: String, username: String, message: String) {
         val tokens = FirebaseDatabase.getInstance().getReference("Tokens")
         val query = tokens.orderByKey().equalTo(receiver)
@@ -223,24 +193,16 @@ class MessageActivity : AppCompatActivity() {
                                 }
                             }
 
-                            
                             override fun onFailure(call: Call<MyResponse?>, t: Throwable) {
                                 TODO("Not yet implemented")
                             }
                         })
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     *
-     * @param myid
-     * @param userid
-     * @param imageurl
-     */
     open fun readMessages(myid: String, userid: String, imageurl: String) {
         mChatModel = ArrayList<ChatModel?>()
         reference = FirebaseDatabase.getInstance().getReference("Chats")
@@ -259,15 +221,10 @@ class MessageActivity : AppCompatActivity() {
                     recyclerView!!.adapter = messageAdapter
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    /**
-     *
-     * @param status
-     */
     open fun status(status: String) {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser!!.uid)
         val hashMap = HashMap<String, Any>()
@@ -275,17 +232,11 @@ class MessageActivity : AppCompatActivity() {
         reference!!.updateChildren(hashMap)
     }
 
-    /**
-     *
-     */
     override fun onResume() {
         super.onResume()
         status("online")
     }
 
-    /**
-     *
-     */
     override fun onPause() {
         super.onPause()
         reference!!.removeEventListener(seenListener!!)

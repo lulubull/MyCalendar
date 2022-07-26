@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import android.app.DatePickerDialog
 import android.content.ContentValues
 import android.content.Intent
@@ -19,25 +18,13 @@ import java.util.*
 import java.util.regex.Pattern
 import kotlinx.android.synthetic.main.activity_register.*
 
-
 class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
-    /** Déclaration de variables */
-
-
     private lateinit var auth: FirebaseAuth
     private lateinit var reference: DatabaseReference
-
     private var date: String? = null
     private var mYear = 0
     private var mMonth = 0
     private var mDay = 0
-
-
-
-    /** Lottie => Librairie offrant des animations en json  */
-
-    /** Lottie => Librairie offrant des animations en json  */
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,9 +47,6 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 )
                 datePickerDialog.show()
             })
-        /** Spinner (ou liste à choix multiple) permettant à l'utilisateur de choisir sa rue
-         * On ajoute une liste à cette liste provenant du fichier strings.xml
-         */
         val adressTypeSpinner = findViewById<Spinner>(R.id.adressTypeSpinner)
         val adresseTypeAdapter = ArrayAdapter.createFromResource(
             this,
@@ -103,30 +87,9 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 txt_townName,
                 txt_telephone
             )
-
-
-
-
         })
     }
 
-
-    /**
-     * 12 Paramètres
-     * @param username
-     * @param email
-     * @param password
-     * @param txt_lastname
-     * @param txt_firstname
-     * @param txt_birthdate
-     * @param txt_nbVoie
-     * @param txt_typeVoie
-     * @param txt_nomVoie
-     * @param txt_codePostal
-     * @param ville
-     * @param telephone
-     * Fonction utilisée afin d'entamer une procédure d'inscription avec Firebase (createUserWithEmailAndPassword)
-     */
     private fun _registrationProcess(
         username: String,
         email: String,
@@ -145,7 +108,6 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         scroll_register_view!!.visibility = View.GONE
         loader_layout!!.animate().alpha(1.0f).duration = 1000
         scroll_register_view!!.animate().alpha(0.0f).duration = 250
-        /** Permet de fermer le clavier du téléphone  */
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
         auth.createUserWithEmailAndPassword(email, password)
@@ -173,7 +135,6 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     hashMap["search"] = username.toLowerCase()
                     reference.setValue(hashMap)
                     Log.v(ContentValues.TAG, "les info user=" + hashMap)
-
                     progressBar1.visibility = View.GONE
                         Toast.makeText(
                             this@RegisterActivity,
@@ -185,13 +146,8 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                         startActivity(intent)
                         finish()
                     }
-
-
             })
     }
-
-    /** Déclaration de méthodes abstraites nécessaire au bon fonctionnement des combobox  */
     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {}
-
     override fun onNothingSelected(parent: AdapterView<*>?) {}
 }

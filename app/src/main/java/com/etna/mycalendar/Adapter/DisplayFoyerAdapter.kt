@@ -1,6 +1,4 @@
 package com.etna.mycalendar.Adapter
-
-
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -19,31 +17,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import de.hdodenhof.circleimageview.CircleImageView
 
-
 class DisplayFoyerAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?) :
     RecyclerView.Adapter<DisplayFoyerAdapter.ViewHolder>() {
-    /** Déclaration de variables  */
     private val mContext: Context = mContext
-
     private val mUserModels: MutableList<UserModel?>? = mUserModels
 
-    /**
-     * Création du view holder. On récupère les item à injecter
-     * @param parent
-     * @param viewType
-     * @return
-     */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =
             LayoutInflater.from(mContext).inflate(R.layout.user_of_foyer_item, parent, false)
         return ViewHolder(view)
     }
 
-    /**
-     * Fonction permettant de contrôler chaque élément de nos vues xml
-     * @param holder
-     * @param position
-     */
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userModel: UserModel? = mUserModels?.get(position)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -92,17 +76,10 @@ class DisplayFoyerAdapter(mContext: Context, mUserModels: MutableList<UserModel?
         holder.imageButton.setOnClickListener { popup.show() }
     }
 
-    /**
-     * Retourne le nombre d'item présent dans mUserModels
-     * @return
-     */
     override fun getItemCount(): Int {
         return mUserModels?.size!!
     }
 
-    /**
-     * Fonction permettant de récuperer les éléments XML de l'item 'user_of_foyer_item.xml'
-     */
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var firstAndLastname: TextView
         var whichCountry: TextView
@@ -116,7 +93,4 @@ class DisplayFoyerAdapter(mContext: Context, mUserModels: MutableList<UserModel?
             whichCountry = itemView.findViewById(R.id.whichCountry)
         }
     }
-
-    /** Constructeur  */
-
 }

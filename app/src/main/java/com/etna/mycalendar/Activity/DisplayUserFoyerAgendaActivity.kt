@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.app.Activity
@@ -25,9 +24,7 @@ import com.google.firebase.database.*
 import java.util.ArrayList
 
 class DisplayUserFoyerAgendaActivity
-/** Constructeur de la classe DisplayUserFoyerAgendaActivity  */
     : AppCompatActivity() {
-    /** Déclaration variables  */
     private var addEventButton: Button? = null
     private var scrollView: NestedScrollView? = null
     private var gridEvents: RecyclerView? = null
@@ -42,16 +39,6 @@ class DisplayUserFoyerAgendaActivity
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_user_foyer_agenda)
         idUserBundle = intent.getSerializableExtra("idUser") as String?
-
-        /*overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);*/
-        /** Initialisation des variables  */
         addEventButton = findViewById(R.id.addEventButton)
         scrollView = findViewById(R.id.scrollView)
         noResultsLayout = findViewById(R.id.noResultsLayout)
@@ -70,24 +57,11 @@ class DisplayUserFoyerAgendaActivity
         })
         noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
         mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
-
-        /* if (bundleArg == null) {
-            _readUsers();
-        } else {
-            ArrayList<UserModel> myNewList = new ArrayList<>();
-            myNewList.addAll(bundleArg.getParcelableArrayList("listUsers"));
-            applyFilter(myNewList);
-        }*/_readEvents()
+        _readEvents()
     }
 
-    /**
-     * Fonction permettant de récuperer tout les Evenements de l'utilisateur
-     */
     private fun _readEvents() {
-        //_showProgress(true)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        /** Reference sur la table Events  */
         val reference = FirebaseDatabase.getInstance().getReference("Events").child(
             idUserBundle!!
         )
@@ -101,7 +75,6 @@ class DisplayUserFoyerAgendaActivity
                 }
                 myEventsAdapter = MyEventsAdapter(applicationContext, mEvents)
                 gridEvents!!.adapter = myEventsAdapter
-                /** On liste tout les evenements  */
                 _placeEventsOnList()
             }
 
@@ -109,14 +82,10 @@ class DisplayUserFoyerAgendaActivity
         })
     }
 
-    /**
-     * Fonction permettant d'afficher les evenements
-     */
     private fun _placeEventsOnList() {
         val activity: Activity = this@DisplayUserFoyerAgendaActivity
         if (activity != null) {
             if (mEvents?.size!! > 0) {
-                //_showProgress(false)
                 mSwipeRefreshLayout!!.isRefreshing = false
                 noResultsLayout!!.isRefreshing = false
                 noResultsLayout!!.visibility = View.GONE
@@ -129,9 +98,6 @@ class DisplayUserFoyerAgendaActivity
         }
     }
 
-    /**
-     * Fait apparaître le Spinner/Loader et cache différentes interfaces
-     */
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     private fun _showProgress(show: Boolean) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {

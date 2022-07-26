@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -27,8 +26,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    /** Déclaration de variables  */
-
     private var firebaseUser: FirebaseUser? = null
     private var reference: DatabaseReference? = null
     private var currenUserModel: UserModel? = null
@@ -36,13 +33,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        /** Fonction utilisée pour apporter une transition entre les activitées  */
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
-        /** On set la toolbar  */
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle("")
-
         firebaseUser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid.toString())
         reference!!.addValueEventListener(object : ValueEventListener {
@@ -51,48 +45,30 @@ class MainActivity : AppCompatActivity() {
                 username.setText(currenUserModel?.username)
 
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         bottomNavigation.setOnNavigationItemSelectedListener(BottomNavigationView.OnNavigationItemSelectedListener { item ->
             var fragment: Fragment? = null
             when (item.itemId) {
                 R.id.home ->
-                    /** HomePageFragment | Même fragment utilisée pour la page d'accueil */
-                    /** HomePageFragment | Même fragment utilisée pour la page d'accueil */
                     fragment = HomePageFragment()
                 R.id.calendriers ->
-                    /** DisplayEventsFragment | Utilisée pour afficher les évènements et calendrier de l'utilisateur */
-                    /** DisplayEventsFragment | Utilisée pour afficher les évènements et calendrier de l'utilisateur */
                     fragment = DisplayEventsFragment()
                 R.id.notifications ->
-                    /** Même et unique Fragment utilisée pour recevoir des notifications en tout genre */
-                    /** Même et unique Fragment utilisée pour recevoir des notifications en tout genre */
                     fragment = NotificationsFragment()
                 R.id.contacts ->
-                    /** Messagerie / Contacts */
-                    /** Messagerie / Contacts */
                     fragment = EventsMessagerieFragment()
                 R.id.profil ->
-                    /** Même et unique Fragment pour la gestion du profil de l'utilisateur  */
-                    /** Même et unique Fragment pour la gestion du profil de l'utilisateur  */
                     fragment = currenUserModel?.let { ProfilUtilisateurFragment(it) }
             }
             val transaction = this@MainActivity.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.content, fragment!!).commit()
             true
         })
-        /** Start Activity with HomePageFragment  */
         val startFragment: Fragment = HomePageFragment()
         _loadFragment(startFragment)
     }
 
-    /**
-     * 1 paramètre
-     * Fonction permettant de charger le Fragment en fonction du choix effectué par l'utilisateur sur la bar du menu
-     * @param fragment
-     * @return
-     */
     private fun _loadFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
             supportFragmentManager
@@ -104,22 +80,6 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 
-    /**
-     * A tester | Afin de savoir si encore utilisée ou pas
-     * @param menu
-     * @return
-     */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu, menu)
-        return true
-    }
-
-    /**
-     * 1 paramètre
-     * Fonction permettant de rediriger l'utilisateur sur l'inferface souhaitait | Permet également la déconnexion
-     * @param item
-     * @return
-     */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.logout -> {
@@ -146,6 +106,3 @@ class MainActivity : AppCompatActivity() {
         return false
     }
 }
-
-
-

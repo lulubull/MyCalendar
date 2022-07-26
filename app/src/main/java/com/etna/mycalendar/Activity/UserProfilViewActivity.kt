@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -12,14 +11,11 @@ import com.etna.mycalendar.R
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.etna.mycalendar.Models.UserModel
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.HashMap
 
-
 class UserProfilViewActivity : AppCompatActivity() {
-    /** Déclaration de variables  */
     private var reference: DatabaseReference? = null
     private var requestType: String? = null
     private var idUser: String? = null
@@ -29,14 +25,12 @@ class UserProfilViewActivity : AppCompatActivity() {
     private var closeButton: Button? = null
     private var sendRequestButton: Button? = null
     private var disponibilityButton: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_profil_view)
-        /** Transition Animation  */
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
-        /** Récupere l'id de l'utilisateur à afficher  */
         idUser = intent.getSerializableExtra("idUser") as String?
-        /** References firebase  */
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val referenceTo = FirebaseDatabase.getInstance().getReference("Users").child(
             firebaseUser?.uid.toString()
@@ -44,7 +38,6 @@ class UserProfilViewActivity : AppCompatActivity() {
         val referenceFrom = FirebaseDatabase.getInstance().getReference("Users").child(
             idUser!!
         ).child("requests").child("from").child(firebaseUser?.uid.toString())
-        /** Initialisation des variables  */
         image_profile = findViewById(R.id.imageViewUser)
         username = findViewById(R.id.usernameTextView)
         pseudo = findViewById(R.id.pseudoTextView)
@@ -63,7 +56,6 @@ class UserProfilViewActivity : AppCompatActivity() {
                     Glide.with(applicationContext).load(userModel?.imageURL).into(image_profile!!)
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         referenceTo.addValueEventListener(object : ValueEventListener {
@@ -97,13 +89,12 @@ class UserProfilViewActivity : AppCompatActivity() {
                     })
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         disponibilityButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 this@UserProfilViewActivity,
-                "Vous ne pouvez pas consulter agenda. Ajouter d'abord l'utilisateur à votre foyer",
+                "Acces refusé à l'agenda",
                 Toast.LENGTH_SHORT
             ).show()
         })

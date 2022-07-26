@@ -1,5 +1,4 @@
 package com.etna.mycalendar.Activity
-
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -11,14 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import com.etna.mycalendar.Models.UserModel
 import com.etna.mycalendar.R
 import com.etna.mycalendar.Models.MyEventsModel
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.*
 
-
 class AddEventActivity : AppCompatActivity() {
-    /** Déclaration de variables  */
     private lateinit var startDate: EditText
     private lateinit var endDate: EditText
     private lateinit var startHour: EditText
@@ -42,16 +38,11 @@ class AddEventActivity : AppCompatActivity() {
     private lateinit var endDateString: String
     private lateinit var myAlertDialog: AlertDialog
     private val currentUser = FirebaseAuth.getInstance().currentUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
-        /** Animation Transition  */
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left)
-
-        /** Mise en place de la toolbar  */
-
-
-        /** Initialisation des variables  */
         selectedItems = ArrayList<Any>()
         mUsers = ArrayList()
         mUsersId = ArrayList()
@@ -82,6 +73,7 @@ class AddEventActivity : AppCompatActivity() {
             )
             datePickerDialog.show()
         })
+
         endDate?.setOnClickListener(View.OnClickListener {
             val mcurrentDate = Calendar.getInstance()
             Locale.setDefault(Locale.FRANCE)
@@ -99,6 +91,7 @@ class AddEventActivity : AppCompatActivity() {
             )
             datePickerDialog.show()
         })
+
         startHour?.setOnClickListener(View.OnClickListener {
             val mcurrentTime = Calendar.getInstance()
             Locale.setDefault(Locale.FRANCE)
@@ -114,6 +107,7 @@ class AddEventActivity : AppCompatActivity() {
             mTimePicker.setTitle("Select Time")
             mTimePicker.show()
         })
+
         endHour?.setOnClickListener(View.OnClickListener {
             val mcurrentTime = Calendar.getInstance()
             Locale.setDefault(Locale.FRANCE)
@@ -129,9 +123,11 @@ class AddEventActivity : AppCompatActivity() {
             mTimePicker.setTitle("Select Time")
             mTimePicker.show()
         })
-        btnAddUsers?.setOnClickListener(View.OnClickListener { // _launchDialog();
+
+        btnAddUsers?.setOnClickListener(View.OnClickListener {
             _getFromTable()
         })
+
         btnAddEvent?.setOnClickListener(View.OnClickListener {
             if (startDateString == "" || endDateString == "" || startHourString == "" || endHourString == "" || eventDescription.toString() == "") {
                 val toast = Toast.makeText(
@@ -169,11 +165,9 @@ class AddEventActivity : AppCompatActivity() {
                                 null
                                 )
                             )
-
                             myEventsDestinataire.child(id.toString()).child(mGroupId.toString()).child("sharedWith")
                                 .setValue(hashMap)
                         }
-                        // myEventsDb.child(mGroupId).child("sharedWith").setValue(hashMap);
                     } else {
                         myEventsDb.child(mGroupId.toString()).setValue(
                             MyEventsModel(
@@ -224,25 +218,20 @@ class AddEventActivity : AppCompatActivity() {
                 val intent = Intent(this@AddEventActivity, MainActivity::class.java)
                 startActivity(intent)
                 val toast =
-                    Toast.makeText(applicationContext, "Evenement ajouté !", Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, "Evenement créé", Toast.LENGTH_SHORT)
                 toast.show()
             }
         })
     }
 
-    /**
-     *
-     * @return
-     */
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()
         return true
     }
 
     /**
-     * Permet de récuperer l'ID des utilisateurs (String) 'ami' avec l'utilisateur
-     * A partir du statut des DEMANDES ENVOYÉES PAR L'UTILISATEUR COURANT
-     * Utilisé pour l'ouverture du Dialog permettant de sélectionner les utilisateurs avec qui partager l'évenement
+     * get frend's id with current user
+     * from current user request
      */
     private fun _getFromTable() {
         mUsersId!!.clear()
@@ -264,15 +253,13 @@ class AddEventActivity : AppCompatActivity() {
                 }
                 _getToTable()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
     /**
-     * Permet de récuperer l'ID des utilisateurs (String) 'ami' avec l'utilisateur
-     * A partir du statut des DEMANDES ENVOYÉES VERS L'UTILISATEUR COURANT
-     * Utilisé pour l'ouverture du Dialog permettant de sélectionner les utilisateurs avec qui partager l'évenement
+     * get frend's id with users
+     * aplies to users
      */
     private fun _getToTable() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -292,20 +279,16 @@ class AddEventActivity : AppCompatActivity() {
                 }
                 _getFinalUsers()
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
     /**
-     * Permet de récuperer les utilisateurs (UserModel) 'ami' avec l'utilisateur
-     * A partir du statut des DEMANDES ENVOYÉES VERS L'UTILISATEUR COURANT
-     * Utilisé pour l'ouverture du Dialog permettant de sélectionner les utilisateurs avec qui partager l'évenement
+     * Get frends model User with current user
+     * aplies to current user
      */
     private fun _getFinalUsers() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
-
-        /** Reference sur la table Users  */
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -323,7 +306,6 @@ class AddEventActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
@@ -331,24 +313,19 @@ class AddEventActivity : AppCompatActivity() {
     private fun _launchDialog() {
         hashMap!!.clear()
         val addUsersBuilder = AlertDialog.Builder(this@AddEventActivity)
-
-        // On se base sur la liste des utilisateurs "amis"
+        // lst frend
         val charSequencesId = arrayOfNulls<CharSequence>(
             mUsers!!.size
         )
         booleanTab = BooleanArray(mUsers!!.size)
-
-        // On initialise la valeur des utilisateur à ajouter (username)
         for (i in mUsers!!.indices) {
             charSequencesId[i] = mUsers.get(i)?.username
         }
         addUsersBuilder.setTitle("Ajouter un utilisateur").setMultiChoiceItems(
             charSequencesId, booleanTab
         ) { dialogInterface, i, isChecked ->
-            // Gestion des click des checkbox
             if (isChecked) {
                 selectedItems?.add(charSequencesId[i]!!)
-                // booleanTab[i] = true;
             } else if (selectedItems!!.contains(i)) {
                 selectedItems!!.removeAt(Integer.valueOf(i))
             }
@@ -356,13 +333,10 @@ class AddEventActivity : AppCompatActivity() {
         addUsersBuilder.setPositiveButton(
             "Ajouter à l'événement"
         ) { dialogInterface, i ->
-            // On parcourt la liste des logins selectionnés (checkbox)
+            // on users choise
             for (j in selectedItems!!.indices) {
-                // On parcourt la liste des utilisteurs "amis"
+                // lst frend
                 for (k in mUsers!!.indices) {
-                    // Sachant qu'il ne peut pas y avoir 2 logins identiques
-                    // Si le login selectionné correspond au login de l'utilisateur "ami"
-                    // on ajoute son id dans hashMap
                     if (selectedItems!![j].toString() == mUsers!![k]?.username) {
                         hashMap!![Integer.toString(j)] = mUsers!![k]?.id.toString()
                     }
