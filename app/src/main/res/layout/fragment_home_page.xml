@@ -22,16 +22,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mon Agenda Partagé"
+                android:text="@string/app_name"
+                android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="40sp"
-                android:textAlignment="center"/>
+                android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:text="Bienvenue sur l'application Mon Agenda Partagé ! Gérez tout vos évènements de manière intuitive avec votre entourgage ! Bonne navigation sur Mon Agenda Partagé ! "
+                android:text="Bienvenue sur l'application MyCalendar ! Gérez tout vos évènements de manière intuitive avec votre entourgage ! Bonne navigation sur MyCalendar ! "
                 android:textColor="#fff"
                 android:textSize="15sp" />
 

@@ -9,7 +9,6 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
-import com.etna.mycalendar.R
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.NestedScrollView
@@ -19,10 +18,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.etna.mycalendar.Adapter.MyEventsAdapter
 import com.etna.mycalendar.Models.MyEventsModel
-import com.etna.mycalendar.Activity.AddEventActivity
+import com.etna.mycalendar.R
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.*
-import java.util.ArrayList
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class DisplayUserFoyerAgendaActivity
 /** Constructeur de la classe DisplayUserFoyerAgendaActivity  */

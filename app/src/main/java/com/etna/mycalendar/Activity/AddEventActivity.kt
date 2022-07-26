@@ -74,7 +74,7 @@ class AddEventActivity : AppCompatActivity() {
             val datePickerDialog = DatePickerDialog(this@AddEventActivity,
                 { view, year, month, dayOfMonth ->
                     var month = month
-                    month = month + 1
+                    month += 1
                     date = "$dayOfMonth/$month/$year"
                     startDateString = date
                     startDate?.setText(date)
@@ -91,7 +91,7 @@ class AddEventActivity : AppCompatActivity() {
             val datePickerDialog = DatePickerDialog(this@AddEventActivity,
                 { view, year, month, dayOfMonth ->
                     var month = month
-                    month = month + 1
+                    month += 1
                     date = "$dayOfMonth/$month/$year"
                     endDateString = date
                     endDate?.setText(date)
@@ -119,8 +119,7 @@ class AddEventActivity : AppCompatActivity() {
             Locale.setDefault(Locale.FRANCE)
             val hour = mcurrentTime[Calendar.HOUR_OF_DAY]
             val minute = mcurrentTime[Calendar.MINUTE]
-            val mTimePicker: TimePickerDialog
-            mTimePicker = TimePickerDialog(this@AddEventActivity,
+            val mTimePicker: TimePickerDialog = TimePickerDialog(this@AddEventActivity,
                 { timePicker, selectedHour, selectedMinute ->
                     endHourString = "$selectedHour:$selectedMinute"
                     endHour?.setText("$selectedHour:$selectedMinute")

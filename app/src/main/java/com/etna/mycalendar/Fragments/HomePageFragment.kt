@@ -41,10 +41,10 @@ class HomePageFragment : Fragment() {
     private  var parrainageCardViewId: CardView? = null
     private var mBottomNav: BottomNavigationView? = null
     private val currentUserModel: UserModel? = null
-    var image_profile: CircleImageView? = null
+    private var image_profile: CircleImageView? = null
     var username: TextView? = null
     var reference: DatabaseReference? = null
-    var storageReference: StorageReference? = null
+    private var storageReference: StorageReference? = null
 
 
     override fun onCreateView(

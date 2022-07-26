@@ -1,11 +1,11 @@
 package com.etna.mycalendar.Notifications
 
 class Data {
-    var user: String? = null
-    var icon = 0
-    var body: String? = null
+    private var user: String? = null
+    private var icon = 0
+    private var body: String? = null
     var title: String? = null
-    var sented: String? = null
+    private var sented: String? = null
 
     constructor(user: String?, icon: Int, body: String?, title: String?, sented: String?) {
         this.user = user

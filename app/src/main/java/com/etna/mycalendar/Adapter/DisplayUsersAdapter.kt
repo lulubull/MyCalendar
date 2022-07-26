@@ -25,7 +25,7 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
     RecyclerView.Adapter<DisplayUsersAdapter.ViewHolder>() {
     /** Déclaration de variables  */
     var mContext: Context? = mContext
-    var mUserModels: MutableList<UserModel?>? = mUserModels
+    private var mUserModels: MutableList<UserModel?>? = mUserModels
 
     /**
      * Création du view holder. On récupère les item à injecter
