@@ -101,7 +101,7 @@ class DisplayFoyerFragment
     private fun _readUsers() {
         mUsers!!.clear()
         mUsersId!!.clear()
-        _showProgress(true)
+        //_showProgress(true)
         _getFromTable()
     }
 
@@ -112,7 +112,7 @@ class DisplayFoyerFragment
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mUsers!!.size > 0) {
-                _showProgress(false)
+                //_showProgress(false)
                 mSwipeRefreshLayout!!.isRefreshing = false
                 noResultsLayout!!.isRefreshing = false
                 noResultsLayout!!.visibility = View.GONE

@@ -149,7 +149,7 @@ class DisplayUsersFragment : Fragment() {
      * Lecture sur la table 'Users'
      */
     private fun _readUsers() {
-        _showProgress(true)
+        //_showProgress(true)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
 
         /** Reference sur la table Users  */

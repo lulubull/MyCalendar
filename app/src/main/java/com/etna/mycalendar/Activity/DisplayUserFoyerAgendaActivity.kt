@@ -19,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
 import com.etna.mycalendar.Adapter.MyEventsAdapter
 import com.etna.mycalendar.Models.MyEventsModel
+import com.etna.mycalendar.Activity.AddEventActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.ArrayList
@@ -83,7 +84,7 @@ class DisplayUserFoyerAgendaActivity
      * Fonction permettant de récuperer tout les Evenements de l'utilisateur
      */
     private fun _readEvents() {
-        _showProgress(true)
+        //_showProgress(true)
         val firebaseUser = FirebaseAuth.getInstance().currentUser
 
         /** Reference sur la table Events  */
@@ -115,7 +116,7 @@ class DisplayUserFoyerAgendaActivity
         val activity: Activity = this@DisplayUserFoyerAgendaActivity
         if (activity != null) {
             if (mEvents?.size!! > 0) {
-                _showProgress(false)
+                //_showProgress(false)
                 mSwipeRefreshLayout!!.isRefreshing = false
                 noResultsLayout!!.isRefreshing = false
                 noResultsLayout!!.visibility = View.GONE
