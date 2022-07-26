@@ -39,7 +39,7 @@ class EventsMessagerieFragment : Fragment() {
 
     class ViewPagerAdapter(fm: FragmentManager?) :
         FragmentPagerAdapter(fm!!) {
-        private val fragments: ArrayList<Fragment>
+        private val fragments: ArrayList<Fragment> = ArrayList()
         private val titles: ArrayList<String>
         override fun getItem(position: Int): Fragment {
             return fragments[position]
@@ -59,7 +59,6 @@ class EventsMessagerieFragment : Fragment() {
         }
 
         init {
-            fragments = ArrayList()
             titles = ArrayList()
         }
     }

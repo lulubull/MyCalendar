@@ -42,12 +42,8 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val eventsModel: MyEventsModel? = mEvents?.get(position)
-        val builder: StringBuilder
+        val builder: StringBuilder = StringBuilder()
 
-        /*if (builder != null) {
-            Log.d("builderClean","clearbUIlder");
-            builder.setLength(0);
-        }*/builder = StringBuilder()
         Log.d("contentBuilder1", "" + builder.toString())
         holder.dateDebut.setText(eventsModel?.startDate)
         holder.dateFin.setText(eventsModel?.endDate)

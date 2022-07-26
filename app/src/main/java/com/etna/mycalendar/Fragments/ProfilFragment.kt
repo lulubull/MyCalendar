@@ -60,7 +60,7 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
     private var image_profile: CircleImageView? = null
 
     /** Constructeur  */
-    fun ProfilFragment(currentUserModel: UserModel?) {
+    private fun ProfilFragment(currentUserModel: UserModel?) {
         this.currentUserModel = currentUserModel
     }
 
@@ -84,7 +84,7 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
 
-                    var userModel = dataSnapshot.getValue(UserModel::class.java)
+                    val userModel = dataSnapshot.getValue(UserModel::class.java)
                     Log.v(TAG, "les info user=" + userModel)
                     view.usernameTextView.setText(userModel?.prenom.toString() + " " + userModel?.nom)
                     view.pseudoTextView.setText( userModel?.username.toString()  )

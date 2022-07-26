@@ -35,12 +35,13 @@ class MessageActivity : AppCompatActivity() {
     var username: TextView? = null
     var fuser: FirebaseUser? = null
     var reference: DatabaseReference? = null
-    var btn_send: ImageButton? = null
-    var text_send: EditText? = null
+    private var btn_send: ImageButton? = null
+    private var text_send: EditText? = null
     var messageAdapter: MessageAdapter? = null
     var mChatModel: MutableList<ChatModel?>? = null
     var recyclerView: RecyclerView? = null
-    var seenListener: ValueEventListener? = null
+
+    private var seenListener: ValueEventListener? = null
     var userid: String? = null
     var apiService: APIService? = null
     var notify = false

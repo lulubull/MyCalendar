@@ -21,7 +21,7 @@ import java.util.HashMap
 class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel?>?) :
     RecyclerView.Adapter<DisplayUsersAdapter.ViewHolder>() {
     var mContext: Context? = mContext
-    var mUserModels: MutableList<UserModel?>? = mUserModels
+    private var mUserModels: MutableList<UserModel?>? = mUserModels
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view: View =

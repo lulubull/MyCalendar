@@ -40,7 +40,7 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 val datePickerDialog = DatePickerDialog(this@RegisterActivity,
                     { view, year, month, dayOfMonth ->
                         var month = month
-                        month = month + 1
+                        month += 1
                         date = "$dayOfMonth:$month:$year"
                         birthDate.setText(date)
                     }, mYear, mMonth, mDay

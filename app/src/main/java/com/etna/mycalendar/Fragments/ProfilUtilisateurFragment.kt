@@ -38,8 +38,8 @@ class ProfilUtilisateurFragment(currentUserModel: UserModel) : Fragment() {
 
     internal inner class ViewPagerAdapter(fm: FragmentManager?) :
         FragmentPagerAdapter(fm!!) {
-        private val fragments: ArrayList<Fragment>
-        private val titles: ArrayList<String>
+        private val fragments: ArrayList<Fragment> = ArrayList()
+        private val titles: ArrayList<String> = ArrayList()
         override fun getItem(position: Int): Fragment {
             return fragments[position]
         }
@@ -57,10 +57,6 @@ class ProfilUtilisateurFragment(currentUserModel: UserModel) : Fragment() {
             return titles[position]
         }
 
-        init {
-            fragments = ArrayList()
-            titles = ArrayList()
-        }
     }
 
     /** Constructeur  */
