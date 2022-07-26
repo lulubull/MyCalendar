@@ -99,7 +99,7 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
                     }
                 }
                 when (theLastMessage) {
-                    "default" -> last_msg.setText("Aucun Message")
+                    "default" -> last_msg.setText("Pas de message")
                     else -> last_msg.setText(theLastMessage)
                 }
                 theLastMessage = "default"

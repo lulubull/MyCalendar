@@ -42,7 +42,7 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
         }
         if (position == mChatModel?.size!! - 1) {
             if (chatModel!!.isIsseen) {
-                holder.txt_seen.setText("Lu")
+                holder.txt_seen.setText("Vu")
             } else {
                 holder.txt_seen.setText("Envoyé")
             }

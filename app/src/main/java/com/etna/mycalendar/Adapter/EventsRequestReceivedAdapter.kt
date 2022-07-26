@@ -83,7 +83,7 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                         holder.cancelButton.text = "Supprimer"
                         holder.cancelButton.setOnClickListener {
                             AlertDialog.Builder(mContext!!)
-                                .setTitle("Etes vous sur ?")
+                                .setTitle("Comfirmation")
                                 .setMessage(
                                     "Etes vous sur de vouloir supprimer " + userModel.id
                                         .toString() + " de votre liste ?"
@@ -109,8 +109,8 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                         holder.acceptButton.setBackgroundResource(R.drawable.bg_button_accepted_ui)
                         holder.acceptButton.setOnClickListener {
                             AlertDialog.Builder(mContext!!)
-                                .setTitle("Etes vous sur ?")
-                                .setMessage("\"Vous pouvez encore accepter la demande qui vous a été envoyé. Si vous souhaitez supprimer définitivement cette demande, appuyez sur \"Supprimer\". Si vous souhaitez accepter cette demande, appuyez sur \"Accepter\"")
+                                .setTitle("Comfirmation")
+                                .setMessage("\"Accepter la demande ?")
                                 .setPositiveButton(
                                     "Accepter",
                                     object : DialogInterface.OnClickListener {
@@ -134,7 +134,7 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                         }
                         holder.acceptButton.text = "Accepter"
                         holder.acceptButton.setBackgroundResource(R.drawable.bg_button_accepted_ui)
-                        holder.cancelButton.text = "Déjà refusée"
+                        holder.cancelButton.text = "Etat déjà refusé"
                         holder.cancelButton.setBackgroundResource(R.drawable.bg_button_cancel_ui)
                         holder.cancelButton.isEnabled = false
                     }
@@ -142,7 +142,6 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                     holder.acceptButton.setOnClickListener { }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }

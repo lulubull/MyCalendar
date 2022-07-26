@@ -86,14 +86,14 @@ class HomePageFragment : Fragment() {
         view.aboutCardViewId.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette section est en cours de développement.",
+                "Pas encore dev.",
                 Toast.LENGTH_SHORT
             ).show()
         })
         view.parrainageCardViewId.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette section est en cours de développement.",
+                "Pas encore dev.",
                 Toast.LENGTH_SHORT
             ).show()
         })

@@ -55,7 +55,7 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
                     if (requestType == "accepted") {
                         holder.message.setVisibility(View.GONE)
                         holder.requestAcceptedTextView.setVisibility(View.VISIBLE)
-                        holder.cancelButton.text = "Envoyer un message"
+                        holder.cancelButton.text = "Envoyer"
                         holder.cancelButton.setBackgroundResource(R.drawable.bg_button_generic_ui)
                         holder.cancelButton.setOnClickListener {
                             val intent = Intent(mContext, MessageActivity::class.java)
@@ -66,13 +66,13 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
                         holder.deleteButton.setBackgroundResource(R.drawable.bg_button_cancel_ui)
                         holder.deleteButton.setOnClickListener {
                             AlertDialog.Builder(mContext!!)
-                                .setTitle("Etes vous sur ?")
+                                .setTitle("Comfirmation")
                                 .setMessage(
                                     "Souhaitez vous supprimer " + userModel.username
                                         .toString() + " de votre liste ?"
                                 )
                                 .setPositiveButton(
-                                    "Annuler la demande",
+                                    "Annuler",
                                     object : DialogInterface.OnClickListener {
                                         override fun onClick(
                                             dialogInterface: DialogInterface,
@@ -99,13 +99,13 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
                         holder.cancelButton.visibility = View.VISIBLE
                         holder.cancelButton.setOnClickListener {
                             AlertDialog.Builder(mContext!!)
-                                .setTitle("Etes vous sur ?")
+                                .setTitle("Comfirmation")
                                 .setMessage(
-                                    "Vous avez envoyé une demande à " + userModel.username
-                                        .toString() + ". Souhaitez vous annuler votre demande ?"
+                                    "Demande envoyée à " + userModel.username
+                                        .toString() + ". Souhaitez l'annuler ?"
                                 )
                                 .setPositiveButton(
-                                    "Annuler la demande",
+                                    "Annuler",
                                     object : DialogInterface.OnClickListener {
                                         override fun onClick(
                                             dialogInterface: DialogInterface,

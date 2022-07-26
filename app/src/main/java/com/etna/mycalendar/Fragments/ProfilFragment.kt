@@ -58,14 +58,12 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         storageReference = FirebaseStorage.getInstance().getReference("uploads")
         fuser = FirebaseAuth.getInstance().currentUser
         reference = FirebaseDatabase.getInstance().getReference("Users").child(fuser?.uid.toString())
-        Log.v(TAG, "les info user=" +reference)
 
         reference?.addListenerForSingleValueEvent(object :ValueEventListener{
             @SuppressLint("SetTextI18n")
 
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                     val userModel = dataSnapshot.getValue(UserModel::class.java)
-                    Log.v(TAG, "les info user=" + userModel)
                     view.usernameTextView.setText(userModel?.prenom.toString() + " " + userModel?.nom)
                     view.pseudoTextView.setText( userModel?.username.toString()  )
                     view.emailUserTextView.setText(  userModel?.email.toString() )
@@ -194,7 +192,7 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         ) {
             imageUri = data.data
             if (uploadTask != null && uploadTask!!.isInProgress) {
-                Toast.makeText(context, "Upload en cours", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "En cours", Toast.LENGTH_SHORT).show()
             }
         }
     }

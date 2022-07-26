@@ -65,7 +65,6 @@ class ChatsFragment : Fragment() {
             }
 
             override fun afterTextChanged(editable: Editable) {
-                Log.d("editable", editable.toString())
                 _searchUsers(searchUserParced)
             }
         })

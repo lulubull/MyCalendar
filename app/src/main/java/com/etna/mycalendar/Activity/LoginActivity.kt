@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this, MainActivity::class.java))
                 }
                 else {
-                    Toast.makeText(this, "email ou mot de Passe Incorrect", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "identifiant ou mot de passe invalide", Toast.LENGTH_SHORT).show()
                 }
             }
     }

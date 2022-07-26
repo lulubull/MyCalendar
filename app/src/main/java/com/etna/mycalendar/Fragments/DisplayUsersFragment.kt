@@ -108,7 +108,7 @@ class DisplayUsersFragment : Fragment() {
         filterButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette fonctionnalitée sera bientôt disponible ! Nos développeurs se concentre dessus",
+                "Pas encore dev",
                 Toast.LENGTH_SHORT
             ).show()
         })

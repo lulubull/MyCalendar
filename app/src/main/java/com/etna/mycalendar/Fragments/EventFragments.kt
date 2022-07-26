@@ -63,7 +63,7 @@ class EventsFragment
         filterButton?.setOnClickListener(View.OnClickListener {
             Toast.makeText(
                 context,
-                "Cette fonctionnalitée sera bientôt disponible",
+                "Pas encore dev",
                 Toast.LENGTH_SHORT
             ).show()
         })
@@ -97,7 +97,6 @@ class EventsFragment
                 for (snapshot in dataSnapshot.children) {
 
                     val eventModel = snapshot.getValue(MyEventsModel::class.java)
-                    Log.v(ContentValues.TAG, "les info user=" + eventModel)
                     mEvents?.add(eventModel)
                 }
                 myEventsAdapter = MyEventsAdapter(context, mEvents)

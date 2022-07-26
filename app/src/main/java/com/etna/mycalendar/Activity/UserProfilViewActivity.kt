@@ -65,7 +65,7 @@ class UserProfilViewActivity : AppCompatActivity() {
                     requestType = dataSnapshot.child("requestType").getValue(String::class.java)
                     if (requestType != null) {
                         if (requestType == "send") {
-                            sendRequestButton?.setText("Demande envoyée !")
+                            sendRequestButton?.setText("Envoyée")
                             sendRequestButton?.setEnabled(false)
                         } else if (requestType == "accepted") {
                             sendRequestButton?.setOnClickListener(View.OnClickListener {
@@ -80,7 +80,6 @@ class UserProfilViewActivity : AppCompatActivity() {
                     }
                 } else {
                     sendRequestButton?.setOnClickListener(View.OnClickListener {
-                        Log.d("noValue", "noValue")
                         val hashMapTo = HashMap<String, String>()
                         hashMapTo["requestType"] = "send"
                         val hashMapFrom = HashMap<String, String>()

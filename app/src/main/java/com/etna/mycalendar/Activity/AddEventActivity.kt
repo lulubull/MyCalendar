@@ -331,7 +331,7 @@ class AddEventActivity : AppCompatActivity() {
             }
         }
         addUsersBuilder.setPositiveButton(
-            "Ajouter à l'événement"
+            "Ajouter à l'utilisateur à l'événement"
         ) { dialogInterface, i ->
             // on users choise
             for (j in selectedItems!!.indices) {

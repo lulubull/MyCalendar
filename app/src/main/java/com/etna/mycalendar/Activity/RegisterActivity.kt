@@ -135,7 +135,6 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     hashMap["status"] = "offline"
                     hashMap["search"] = username.toLowerCase()
                     reference.setValue(hashMap)
-                    Log.v(ContentValues.TAG, "les info user=" + hashMap)
                     progressBar1.visibility = View.GONE
                         Toast.makeText(
                             this@RegisterActivity,

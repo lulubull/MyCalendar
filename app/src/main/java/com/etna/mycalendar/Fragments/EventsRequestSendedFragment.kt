@@ -60,7 +60,7 @@ class EventsRequestSendedFragment : Fragment() {
         })
         // callback recall last frag (btn back)
         val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true /* enabled by default */) {
+            object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     if (scrollView?.getScrollY()!! > 0) {
                         scrollView?.smoothScrollTo(0, 0)

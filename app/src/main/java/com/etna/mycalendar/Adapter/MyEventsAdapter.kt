@@ -63,7 +63,7 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
             Log.d("contentValue", "" + value)
             _getUsername(holder, value.toString(), builder)
         }
-        holder.sharedWithTextView.text = "Evenement partagé avec :"
+        holder.sharedWithTextView.text = "Partagé avec :"
         holder.sharedWithTextView.visibility = View.VISIBLE
         holder.sharedWith.visibility = View.VISIBLE
 
@@ -118,25 +118,19 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
         valueReceived: String,
         builderReceived: StringBuilder
     ) {
-        Log.d("valueReceived", valueReceived)
         val userRef = FirebaseDatabase.getInstance().getReference("Users")
         userRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 Log.d("inDataChanged", "inDataChanged")
                 for (snapshot in dataSnapshot.children) {
                     val userInfo: UserModel? = snapshot.getValue(UserModel::class.java)
-                    Log.d("contentUserInf", "" + userInfo.toString())
                     if (userInfo?.id.equals(valueReceived)) {
-                        Log.d("itstrue", "true")
-                        Log.d("userName", userInfo?.username.toString())
                         builderReceived.append(userInfo?.username)
                         builderReceived.append(" ")
-                        Log.v(ContentValues.TAG, "Shared with=" + builderReceived.toString())
                         holder.sharedWith.text = builderReceived.toString()
                     }
                 }
             }
-
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }

@@ -30,7 +30,7 @@ class SendEmailActivity : AppCompatActivity() {
             it.putExtra(Intent.EXTRA_SUBJECT, eSubject?.getText().toString())
             it.putExtra(Intent.EXTRA_TEXT, eMsg?.getText())
             it.type = "message/rfc822"
-            startActivity(Intent.createChooser(it, "Choisissez votre client mail"))
+            startActivity(Intent.createChooser(it, "Choisissir messagerie"))
         })
     }
 }
