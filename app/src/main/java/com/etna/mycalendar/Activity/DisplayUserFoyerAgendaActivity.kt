@@ -25,8 +25,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class DisplayUserFoyerAgendaActivity
-    : AppCompatActivity() {
+class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
     private var addEventButton: Button? = null
     private var scrollView: NestedScrollView? = null
     private var gridEvents: RecyclerView? = null

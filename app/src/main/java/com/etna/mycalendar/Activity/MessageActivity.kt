@@ -32,18 +32,18 @@ import java.util.ArrayList
 import java.util.HashMap
 
 class MessageActivity : AppCompatActivity() {
-    var profile_image: CircleImageView? = null
+    var profileImage: CircleImageView? = null
     var username: TextView? = null
     var fuser: FirebaseUser? = null
     var reference: DatabaseReference? = null
-    private var btn_send: ImageButton? = null
-    private var text_send: EditText? = null
+    private var btnSend: ImageButton? = null
+    private var textSend: EditText? = null
     var messageAdapter: MessageAdapter? = null
     var mChatModel: MutableList<ChatModel?>? = null
     var recyclerView: RecyclerView? = null
 
     private var seenListener: ValueEventListener? = null
-    var userid: String? = null
+    var userId: String? = null
     var apiService: APIService? = null
     var notify = false
 
@@ -61,18 +61,18 @@ class MessageActivity : AppCompatActivity() {
         val linearLayoutManager = LinearLayoutManager(getApplicationContext())
         linearLayoutManager.stackFromEnd = true
         recyclerView!!.layoutManager = linearLayoutManager
-        profile_image = findViewById<CircleImageView>(R.id.profile_image)
+        profileImage = findViewById<CircleImageView>(R.id.profile_image)
         username = findViewById<TextView>(R.id.username)
-        btn_send = findViewById<ImageButton>(R.id.btn_send)
-        text_send = findViewById<EditText>(R.id.text_send)
+        btnSend = findViewById<ImageButton>(R.id.btn_send)
+        textSend = findViewById<EditText>(R.id.text_send)
         intent = getIntent()
-        userid = intent.getStringExtra("userid")
+        userId = intent.getStringExtra("userid")
         fuser = FirebaseAuth.getInstance().currentUser
-        btn_send!!.setOnClickListener {
+        btnSend!!.setOnClickListener {
             notify = true
-            val msg = text_send!!.text.toString()
+            val msg = textSend!!.text.toString()
             if (msg != "") {
-                sendMessage(fuser!!.uid, userid.toString(), msg)
+                sendMessage(fuser!!.uid, userId.toString(), msg)
             } else {
                 Toast.makeText(
                     this@MessageActivity,
@@ -80,24 +80,24 @@ class MessageActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            text_send!!.setText("")
+            textSend!!.setText("")
         }
-        reference = FirebaseDatabase.getInstance().getReference("Users").child(userid!!)
+        reference = FirebaseDatabase.getInstance().getReference("Users").child(userId!!)
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val userModel: UserModel? = dataSnapshot.getValue(UserModel::class.java)
                 username?.setText(userModel?.username)
                 if (userModel?.imageURL.equals("default")) {
-                    profile_image!!.setImageResource(R.mipmap.ic_launcher)
+                    profileImage!!.setImageResource(R.mipmap.ic_launcher)
                 } else {
                     Glide.with(getApplicationContext()).load(userModel!!.imageURL)
-                        .into(profile_image!!)
+                        .into(profileImage!!)
                 }
-                readMessages(fuser!!.uid, userid!!, userModel!!.imageURL)
+                readMessages(fuser!!.uid, userId!!, userModel!!.imageURL)
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-        seenMessage(userid!!)
+        seenMessage(userId!!)
     }
 
     open fun seenMessage(userid: String) {
@@ -129,14 +129,14 @@ class MessageActivity : AppCompatActivity() {
         reference.child("Chats").push().setValue(hashMap)
         val chatRef = FirebaseDatabase.getInstance().getReference("Chatlist")
             .child(fuser!!.uid)
-            .child(userid!!)
+            .child(userId!!)
         val chatRef2 = FirebaseDatabase.getInstance().getReference("Chatlist")
-            .child(userid!!)
+            .child(userId!!)
             .child(fuser!!.uid)
         chatRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 if (!dataSnapshot.exists()) {
-                    chatRef.child("id").setValue(userid)
+                    chatRef.child("id").setValue(userId)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -171,7 +171,7 @@ class MessageActivity : AppCompatActivity() {
                     val token: Token? = snapshot.getValue(Token::class.java)
                     val data = Data(
                         fuser!!.uid, R.mipmap.ic_launcher, "$username: $message", "Nouveau Message",
-                        userid
+                        userId
                     )
                     val sender = Sender(data, token?.token.toString())
                     apiService?.sendNotification(sender)

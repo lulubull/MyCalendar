@@ -6,7 +6,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
 import android.view.MenuItem
 import com.etna.mycalendar.Fragments.HomePageFragment
 import com.etna.mycalendar.Fragments.NotificationsFragment
@@ -29,7 +28,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private var firebaseUser: FirebaseUser? = null
     private var reference: DatabaseReference? = null
-    private var currenUserModel: UserModel? = null
+    private var currentUserModel: UserModel? = null
     private val fragment: Fragment? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +41,8 @@ class MainActivity : AppCompatActivity() {
         reference = FirebaseDatabase.getInstance().getReference("Users").child(firebaseUser?.uid.toString())
         reference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                currenUserModel = dataSnapshot.getValue(UserModel::class.java)
-                username.setText(currenUserModel?.username)
+                currentUserModel = dataSnapshot.getValue(UserModel::class.java)
+                username.setText(currentUserModel?.username)
 
             }
             override fun onCancelled(databaseError: DatabaseError) {}
@@ -60,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.contacts ->
                     fragment = EventsMessagerieFragment()
                 R.id.profil ->
-                    fragment = currenUserModel?.let { ProfilUtilisateurFragment(it) }
+                    fragment = currentUserModel?.let { ProfilUtilisateurFragment(it) }
             }
             val transaction = this@MainActivity.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.content, fragment!!).commit()

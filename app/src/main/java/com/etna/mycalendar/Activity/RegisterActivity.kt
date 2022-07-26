@@ -1,11 +1,9 @@
 package com.etna.mycalendar.Activity
 
 import android.app.DatePickerDialog
-import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
@@ -16,7 +14,6 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.*
-import java.util.regex.Pattern
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
@@ -48,45 +45,40 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                 )
                 datePickerDialog.show()
             })
-        val adressTypeSpinner = findViewById<Spinner>(R.id.adressTypeSpinner)
-        val adresseTypeAdapter = ArrayAdapter.createFromResource(
+        val addressTypeSpinner = findViewById<Spinner>(R.id.adressTypeSpinner)
+        val addressTypeAdapter = ArrayAdapter.createFromResource(
             this,
             R.array.adressTypeSpinner, android.R.layout.simple_spinner_item
         )
-        adresseTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        adressTypeSpinner.adapter = adresseTypeAdapter
-        adressTypeSpinner.setOnItemSelectedListener(this)
+        addressTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        addressTypeSpinner.adapter = addressTypeAdapter
+        addressTypeSpinner.setOnItemSelectedListener(this)
         btn_register.setOnClickListener(View.OnClickListener {
-            val upperCase = Pattern.compile("[A-Z]")
-            val lowerCase = Pattern.compile("[a-z]")
-            val digitCase = Pattern.compile("[0-9]")
-            val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
-            val txt_username: String = username.getText().toString()
-            val txt_email: String = email.getText().toString()
-            val txt_lastname = lastname.getText().toString()
-            val txt_firstname: String = firstname.getText().toString()
-            val txt_birthdate: String = birthDate.getText().toString()
-            val txt_nbVoie: String = numeroVoieET.getText().toString()
-            val txt_typeVoie = adressTypeSpinner.getSelectedItem().toString()
-            val txt_nomVoie: String = adressNameET.getText().toString()
-            val txt_codePostal: String = codePostal.getText().toString()
-            val txt_townName: String = townName.getText().toString()
-            val txt_telephone: String = numeroTelephoneET.getText().toString()
-            val txt_password: String = passwordTxt.getText().toString()
-            val txt_passwordRetype = passwordTxtRetype.getText().toString()
+            val txtUsername: String = username.getText().toString()
+            val txtEmail: String = email.getText().toString()
+            val txtLastName = lastname.getText().toString()
+            val txtFirstName: String = firstname.getText().toString()
+            val txtBirthDate: String = birthDate.getText().toString()
+            val txtNbVoie: String = numeroVoieET.getText().toString()
+            val txtTypeVoie = addressTypeSpinner.getSelectedItem().toString()
+            val txtNomVoie: String = adressNameET.getText().toString()
+            val txtCodePostal: String = codePostal.getText().toString()
+            val txtTownName: String = townName.getText().toString()
+            val txtTelephone: String = numeroTelephoneET.getText().toString()
+            val txtPassword: String = passwordTxt.getText().toString()
             _registrationProcess(
-                txt_username,
-                txt_email,
-                txt_password,
-                txt_lastname,
-                txt_firstname,
-                txt_birthdate,
-                txt_nbVoie,
-                txt_typeVoie,
-                txt_nomVoie,
-                txt_codePostal,
-                txt_townName,
-                txt_telephone
+                txtUsername,
+                txtEmail,
+                txtPassword,
+                txtLastName,
+                txtFirstName,
+                txtBirthDate,
+                txtNbVoie,
+                txtTypeVoie,
+                txtNomVoie,
+                txtCodePostal,
+                txtTownName,
+                txtTelephone
             )
         })
     }
@@ -95,13 +87,13 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         username: String,
         email: String,
         password: String,
-        txt_lastname: String,
-        txt_firstname: String,
-        txt_birthdate: String,
-        txt_nbVoie: String,
-        txt_typeVoie: String,
-        txt_nomVoie: String,
-        txt_codePostal: String,
+        txtLastName: String,
+        txtFirstName: String,
+        txtBirthDate: String,
+        txtNbVoie: String,
+        txtTypeVoie: String,
+        txtNomVoie: String,
+        txtCodePostal: String,
         ville: String,
         telephone: String
     ) {
@@ -119,15 +111,15 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
                     reference = FirebaseDatabase.getInstance().getReference("Users/"+firebaseUser?.uid)
                     val hashMap = HashMap<String, String>()
                     hashMap["id"] = userid.toString()
-                    hashMap["nom"] = txt_lastname
-                    hashMap["prenom"] = txt_firstname
+                    hashMap["nom"] = txtLastName
+                    hashMap["prenom"] = txtFirstName
                     hashMap["username"] = username
                     hashMap["email"] = email
-                    hashMap["dateDeNaissance"] = txt_birthdate
-                    hashMap["numeroVoie"] = txt_nbVoie
-                    hashMap["typeVoie"] = txt_typeVoie
-                    hashMap["nomVoie"] = txt_nomVoie
-                    hashMap["codePostal"] = txt_codePostal
+                    hashMap["dateDeNaissance"] = txtBirthDate
+                    hashMap["numeroVoie"] = txtNbVoie
+                    hashMap["typeVoie"] = txtTypeVoie
+                    hashMap["nomVoie"] = txtNomVoie
+                    hashMap["codePostal"] = txtCodePostal
                     hashMap["ville"] = ville
                     hashMap["telephone"] = telephone
                     hashMap["availableDates"] = ""
