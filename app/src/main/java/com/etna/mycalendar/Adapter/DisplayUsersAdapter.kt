@@ -55,9 +55,9 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
             userModel?.ville.toString() + " " + userModel?.codePostal
         )
         if (userModel?.imageURL.equals("default")) {
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher)
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(mContext!!).load(userModel?.imageURL).into(holder.profile_image)
+            Glide.with(mContext!!).load(userModel?.imageURL).into(holder.profileImage)
         }
         referenceTo.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -264,12 +264,12 @@ class DisplayUsersAdapter(mContext: Context?, mUserModels: MutableList<UserModel
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var firstAndLastname: TextView
         var whichCountry: TextView
-        var profile_image: CircleImageView
+        var profileImage: CircleImageView
         var imageButton: ImageButton
 
         init {
             firstAndLastname = itemView.findViewById(R.id.firstAndLastname)
-            profile_image = itemView.findViewById(R.id.profile_image)
+            profileImage = itemView.findViewById(R.id.profile_image)
             imageButton = itemView.findViewById(R.id.imageButton)
             whichCountry = itemView.findViewById(R.id.whichCountry)
         }

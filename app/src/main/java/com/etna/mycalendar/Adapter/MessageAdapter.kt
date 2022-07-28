@@ -34,20 +34,20 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val chatModel: ChatModel? = mChatModel?.get(position)
-        holder.show_message.setText(chatModel?.message)
+        holder.showMessage.setText(chatModel?.message)
         if (imageurl == "default") {
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher)
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(mContext).load(imageurl).into(holder.profile_image)
+            Glide.with(mContext).load(imageurl).into(holder.profileImage)
         }
         if (position == mChatModel?.size!! - 1) {
             if (chatModel!!.isIsseen) {
-                holder.txt_seen.setText("Vu")
+                holder.txtSeen.setText("Vu")
             } else {
-                holder.txt_seen.setText("Envoyé")
+                holder.txtSeen.setText("Envoyé")
             }
         } else {
-            holder.txt_seen.setVisibility(View.GONE)
+            holder.txtSeen.setVisibility(View.GONE)
         }
     }
 
@@ -56,14 +56,14 @@ class MessageAdapter(mContext: Context, mChatModel: MutableList<ChatModel?>?, im
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var show_message: TextView
-        var profile_image: ImageView
-        var txt_seen: TextView
+        var showMessage: TextView
+        var profileImage: ImageView
+        var txtSeen: TextView
 
         init {
-            show_message = itemView.findViewById<TextView>(R.id.show_message)
-            profile_image = itemView.findViewById(R.id.profile_image)
-            txt_seen = itemView.findViewById<TextView>(R.id.txt_seen)
+            showMessage = itemView.findViewById<TextView>(R.id.show_message)
+            profileImage = itemView.findViewById(R.id.profile_image)
+            txtSeen = itemView.findViewById<TextView>(R.id.txt_seen)
         }
     }
 

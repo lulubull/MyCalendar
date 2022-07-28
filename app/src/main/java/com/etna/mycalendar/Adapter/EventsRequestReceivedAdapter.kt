@@ -43,9 +43,9 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
                 .child("requests").child("from").child(userModel?.id.toString())
         holder.username.setText(userModel.username)
         if (userModel.imageURL.equals("default")) {
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher)
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(mContext!!).load(userModel.imageURL).into(holder.profile_image)
+            Glide.with(mContext!!).load(userModel.imageURL).into(holder.profileImage)
         }
         holder.cancelButton.setOnClickListener { }
         referenceFrom.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -148,13 +148,13 @@ class EventsRequestReceivedAdapter(mContext: Context?, mUserModels: List<UserMod
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var username: TextView
-        var profile_image: ImageView
+        var profileImage: ImageView
         var cancelButton: Button
         var acceptButton: Button
 
         init {
             username = itemView.findViewById<TextView>(R.id.username)
-            profile_image = itemView.findViewById(R.id.profile_image)
+            profileImage = itemView.findViewById(R.id.profile_image)
             acceptButton = itemView.findViewById(R.id.acceptButton)
             cancelButton = itemView.findViewById(R.id.cancelButton)
         }

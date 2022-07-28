@@ -49,13 +49,13 @@ class EventsRequestSendedFragment : Fragment() {
                 for (snapshot in dataSnapshot.getChildren()) {
                     (keysList as ArrayList<String>).add(snapshot.getKey().toString())
                 }
-                _readSendedRequests()
+                readSendedRequests()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         mSwipeRefreshLayout?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                _readSendedRequests()
+                readSendedRequests()
             }
         })
         // callback recall last frag (btn back)
@@ -73,7 +73,7 @@ class EventsRequestSendedFragment : Fragment() {
     /**
      * get frends rquest and push to adapter
      */
-    private fun _readSendedRequests() {
+    private fun readSendedRequests() {
         mUserModels = ArrayList<UserModel>()
         val referenceUser: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
         referenceUser.addValueEventListener(object : ValueEventListener {

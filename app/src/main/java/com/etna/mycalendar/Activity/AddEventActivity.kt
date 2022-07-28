@@ -125,7 +125,7 @@ class AddEventActivity : AppCompatActivity() {
         })
 
         btnAddUsers?.setOnClickListener(View.OnClickListener {
-            _getFromTable()
+            getFromTable()
         })
 
         btnAddEvent?.setOnClickListener(View.OnClickListener {
@@ -233,7 +233,7 @@ class AddEventActivity : AppCompatActivity() {
      * get frend's id with current user
      * from current user request
      */
-    private fun _getFromTable() {
+    private fun getFromTable() {
         mUsersId!!.clear()
         mUsers!!.clear()
         val firebaseUser = FirebaseAuth.getInstance().currentUser
@@ -251,7 +251,7 @@ class AddEventActivity : AppCompatActivity() {
                         mUsersId!!.add(userId)
                     }
                 }
-                _getToTable()
+                getToTable()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
@@ -261,7 +261,7 @@ class AddEventActivity : AppCompatActivity() {
      * get frend's id with users
      * aplies to users
      */
-    private fun _getToTable() {
+    private fun getToTable() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val referenceTo = FirebaseDatabase.getInstance().getReference("Users").child(
             firebaseUser!!.uid
@@ -277,7 +277,7 @@ class AddEventActivity : AppCompatActivity() {
                         mUsersId!!.add(userId)
                     }
                 }
-                _getFinalUsers()
+                getFinalUsers()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
@@ -287,7 +287,7 @@ class AddEventActivity : AppCompatActivity() {
      * Get frends model User with current user
      * aplies to current user
      */
-    private fun _getFinalUsers() {
+    private fun getFinalUsers() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
@@ -301,7 +301,7 @@ class AddEventActivity : AppCompatActivity() {
                         }
                     }
                     if (mUsers!!.size == mUsersId!!.size) {
-                        _launchDialog()
+                        launchDialog()
                         break
                     }
                 }
@@ -310,7 +310,7 @@ class AddEventActivity : AppCompatActivity() {
         })
     }
 
-    private fun _launchDialog() {
+    private fun launchDialog() {
         hashMap!!.clear()
         val addUsersBuilder = AlertDialog.Builder(this@AddEventActivity)
         // lst frend

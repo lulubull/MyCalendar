@@ -66,10 +66,10 @@ class MainActivity : AppCompatActivity() {
             true
         })
         val startFragment: Fragment = HomePageFragment()
-        _loadFragment(startFragment)
+        loadFragment(startFragment)
     }
 
-    private fun _loadFragment(fragment: Fragment?): Boolean {
+    private fun loadFragment(fragment: Fragment?): Boolean {
         if (fragment != null) {
             supportFragmentManager
                 .beginTransaction()

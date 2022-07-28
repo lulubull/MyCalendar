@@ -19,7 +19,7 @@ class UserProfilViewActivity : AppCompatActivity() {
     private var reference: DatabaseReference? = null
     private var requestType: String? = null
     private var idUser: String? = null
-    private var image_profile: ImageView? = null
+    private var imageProfile: ImageView? = null
     private var username: TextView? = null
     private var pseudo: TextView? = null
     private var closeButton: Button? = null
@@ -38,7 +38,7 @@ class UserProfilViewActivity : AppCompatActivity() {
         val referenceFrom = FirebaseDatabase.getInstance().getReference("Users").child(
             idUser!!
         ).child("requests").child("from").child(firebaseUser?.uid.toString())
-        image_profile = findViewById(R.id.imageViewUser)
+        imageProfile = findViewById(R.id.imageViewUser)
         username = findViewById(R.id.usernameTextView)
         pseudo = findViewById(R.id.pseudoTextView)
         closeButton = findViewById(R.id.closeButton)
@@ -51,9 +51,9 @@ class UserProfilViewActivity : AppCompatActivity() {
                 username?.setText(userModel?.prenom.toString() + " " + userModel?.nom)
                 pseudo?.setText("(" + userModel?.username.toString() + ")")
                 if (userModel?.imageURL.equals("default")) {
-                    image_profile?.setImageResource(R.mipmap.ic_launcher)
+                    imageProfile?.setImageResource(R.mipmap.ic_launcher)
                 } else {
-                    Glide.with(applicationContext).load(userModel?.imageURL).into(image_profile!!)
+                    Glide.with(applicationContext).load(userModel?.imageURL).into(imageProfile!!)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {}

@@ -33,26 +33,26 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
         val userModel: UserModel? = mUserModels?.get(position)
         holder.username.setText(userModel?.username)
         if (userModel?.imageURL.equals("default")) {
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher)
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(mContext).load(userModel?.imageURL).into(holder.profile_image)
+            Glide.with(mContext).load(userModel?.imageURL).into(holder.profileImage)
         }
         if (ischat) {
-            lastMessage(userModel?.id.toString(), holder.last_msg)
+            lastMessage(userModel?.id.toString(), holder.lastMsg)
         } else {
-            holder.last_msg.setVisibility(View.GONE)
+            holder.lastMsg.setVisibility(View.GONE)
         }
         if (ischat) {
             if (userModel?.status.equals("online")) {
-                holder.img_on.visibility = View.VISIBLE
-                holder.img_off.visibility = View.GONE
+                holder.imgOn.visibility = View.VISIBLE
+                holder.imgOff.visibility = View.GONE
             } else {
-                holder.img_on.visibility = View.GONE
-                holder.img_off.visibility = View.VISIBLE
+                holder.imgOn.visibility = View.GONE
+                holder.imgOff.visibility = View.VISIBLE
             }
         } else {
-            holder.img_on.visibility = View.GONE
-            holder.img_off.visibility = View.GONE
+            holder.imgOn.visibility = View.GONE
+            holder.imgOff.visibility = View.GONE
         }
         holder.itemView.setOnClickListener(View.OnClickListener {
             val intent = Intent(mContext, MessageActivity::class.java)
@@ -67,17 +67,17 @@ class UserAdapter(mContext: Context, mUserModels: MutableList<UserModel?>?, isch
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var username: TextView
-        var profile_image: ImageView
-        val img_on: ImageView
-        val img_off: ImageView
-        val last_msg: TextView
+        var profileImage: ImageView
+        val imgOn: ImageView
+        val imgOff: ImageView
+        val lastMsg: TextView
 
         init {
             username = itemView.findViewById<TextView>(R.id.username)
-            profile_image = itemView.findViewById(R.id.profile_image)
-            img_on = itemView.findViewById(R.id.img_on)
-            img_off = itemView.findViewById(R.id.img_off)
-            last_msg = itemView.findViewById<TextView>(R.id.last_msg)
+            profileImage = itemView.findViewById(R.id.profile_image)
+            imgOn = itemView.findViewById(R.id.img_on)
+            imgOff = itemView.findViewById(R.id.img_off)
+            lastMsg = itemView.findViewById<TextView>(R.id.last_msg)
         }
     }
 

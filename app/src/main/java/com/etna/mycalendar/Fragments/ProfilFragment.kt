@@ -2,11 +2,9 @@ package com.etna.mycalendar.Fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -26,7 +24,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.StorageTask
 import de.hdodenhof.circleimageview.CircleImageView
-import kotlinx.android.synthetic.main.activity_main.view.*
 import kotlinx.android.synthetic.main.fragment_profil.*
 import kotlinx.android.synthetic.main.fragment_profil.view.*
 
@@ -39,14 +36,14 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
     private var reference: DatabaseReference? = null
     private var fuser: FirebaseUser? = null
     private var storageReference: StorageReference? = null
-    private val IMAGE_REQUEST = 1
+    private val imageRequest = 1
     private var imageUri: Uri? = null
     private var uploadTask: StorageTask<*>? = null
     private var currentUserModel: UserModel? = null
-    private var image_profile: CircleImageView? = null
+    private var imageProfile: CircleImageView? = null
 
     /** Constructeur  */
-    private fun ProfilFragment(currentUserModel: UserModel?) {
+    private fun profilFragment(currentUserModel: UserModel?) {
         this.currentUserModel = currentUserModel
     }
 
@@ -73,12 +70,12 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
                     villeTextView.setText( userModel?.ville.toString() )
                     codePostalTextView.setText(userModel?.codePostal.toString() )
                     if (userModel?.imageURL?.equals("default") == true) {
-                        image_profile?.setImageResource(R.mipmap.ic_launcher)
+                        imageProfile?.setImageResource(R.mipmap.ic_launcher)
                 }
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
-        image_profile?.setOnClickListener(View.OnClickListener { openImage() })
+        imageProfile?.setOnClickListener(View.OnClickListener { openImage() })
         view.deconnectionButton.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
             startActivity(
@@ -176,18 +173,18 @@ class ProfilFragment(currentUserModel: UserModel) : Fragment() {
         val intent = Intent()
         intent.type = "image/*"
         intent.action = Intent.ACTION_GET_CONTENT
-        startActivityForResult(intent, IMAGE_REQUEST)
+        startActivityForResult(intent, imageRequest)
     }
 
     private fun getFileExtension(uri: Uri): String? {
-        val contentResolver = context!!.contentResolver
+        val contentResolver = requireContext().contentResolver
         val mimeTypeMap = MimeTypeMap.getSingleton()
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if ((requestCode == IMAGE_REQUEST) && (resultCode == Activity.RESULT_OK
+        if ((requestCode == imageRequest) && (resultCode == Activity.RESULT_OK
                     ) && (data != null) && (data.data != null)
         ) {
             imageUri = data.data

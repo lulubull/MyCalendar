@@ -56,13 +56,13 @@ class EventsRequestReceivedFragment
                     val key: String = snapshot.getKey().toString()
                     (keysList as ArrayList<String>).add(snapshot.getKey().toString())
                 }
-                _readReceivedRequests()
+                readReceivedRequests()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
         mSwipeRefreshLayout?.setOnRefreshListener(object : SwipeRefreshLayout.OnRefreshListener {
             override fun onRefresh() {
-                _readReceivedRequests()
+                readReceivedRequests()
             }
         })
         // callback recall last frag (btn back)
@@ -74,17 +74,17 @@ class EventsRequestReceivedFragment
                     }
                 }
             }
-        _updateToken(FirebaseInstanceId.getInstance().getToken().toString())
+        updateToken(FirebaseInstanceId.getInstance().getToken().toString())
         return view
     }
 
-    private fun _updateToken(token: String) {
+    private fun updateToken(token: String) {
         val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
         val token1 = Token(token)
         reference.child(fuser?.getUid().toString()).setValue(token1)
     }
 
-    private fun _readReceivedRequests() {
+    private fun readReceivedRequests() {
         mUserModels = ArrayList<UserModel>()
         val referenceUser: DatabaseReference = FirebaseDatabase.getInstance().getReference("Users")
         referenceUser.addValueEventListener(object : ValueEventListener {

@@ -30,7 +30,7 @@ class HomePageFragment : Fragment() {
     private  var parrainageCardViewId: CardView? = null
     private var mBottomNav: BottomNavigationView? = null
     private val currentUserModel: UserModel? = null
-    private var image_profile: CircleImageView? = null
+    private var imageProfile: CircleImageView? = null
     var username: TextView? = null
     var reference: DatabaseReference? = null
     private var storageReference: StorageReference? = null
@@ -40,7 +40,7 @@ class HomePageFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home_page, container, false)
-        image_profile = view.findViewById(R.id.profile_image)
+        imageProfile = view.findViewById(R.id.profile_image)
         username = view.findViewById(R.id.username)
         storageReference = FirebaseStorage.getInstance().getReference("uploads")
         fuser = FirebaseAuth.getInstance().currentUser

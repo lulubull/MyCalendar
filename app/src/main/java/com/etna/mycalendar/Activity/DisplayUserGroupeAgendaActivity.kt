@@ -25,7 +25,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
-class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
+class DisplayUserGroupeAgendaActivity: AppCompatActivity() {
     private var addEventButton: Button? = null
     private var scrollView: NestedScrollView? = null
     private var gridEvents: RecyclerView? = null
@@ -38,7 +38,7 @@ class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
     private var idUserBundle: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_display_user_foyer_agenda)
+        setContentView(R.layout.activity_display_user_groupe_agenda)
         idUserBundle = intent.getSerializableExtra("idUser") as String?
         addEventButton = findViewById(R.id.addEventButton)
         scrollView = findViewById(R.id.scrollView)
@@ -52,16 +52,16 @@ class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
         mProgressView = findViewById(R.id.progressBar)
         mEvents = ArrayList()
         addEventButton?.setOnClickListener(View.OnClickListener {
-            val intent = Intent(this@DisplayUserFoyerAgendaActivity, AddEventActivity::class.java)
+            val intent = Intent(this@DisplayUserGroupeAgendaActivity, AddEventActivity::class.java)
             intent.putExtra("idUser", idUserBundle)
             startActivity(intent)
         })
-        noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
-        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
-        _readEvents()
+        noResultsLayout?.setOnRefreshListener(OnRefreshListener { readEvents() })
+        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { readEvents() })
+        readEvents()
     }
 
-    private fun _readEvents() {
+    private fun readEvents() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Events").child(
             idUserBundle!!
@@ -76,15 +76,15 @@ class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
                 }
                 myEventsAdapter = MyEventsAdapter(applicationContext, mEvents)
                 gridEvents!!.adapter = myEventsAdapter
-                _placeEventsOnList()
+                placeEventsOnList()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _placeEventsOnList() {
-        val activity: Activity = this@DisplayUserFoyerAgendaActivity
+    private fun placeEventsOnList() {
+        val activity: Activity = this@DisplayUserGroupeAgendaActivity
         if (activity != null) {
             if (mEvents?.size!! > 0) {
                 mSwipeRefreshLayout!!.isRefreshing = false
@@ -96,32 +96,6 @@ class DisplayUserFoyerAgendaActivity: AppCompatActivity() {
                 noResultsLayout!!.visibility = View.VISIBLE
                 noResultsLayout!!.isRefreshing = false
             }
-        }
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private fun _showProgress(show: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-            mSwipeRefreshLayout!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-                }
-            })
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mProgressView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-                }
-            })
-        } else {
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
         }
     }
 }

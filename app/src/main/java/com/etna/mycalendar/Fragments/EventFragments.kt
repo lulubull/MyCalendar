@@ -71,8 +71,8 @@ class EventsFragment
             val intent = Intent(activity, AddEventActivity::class.java)
             startActivity(intent)
         })
-        noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
-        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readEvents() })
+        noResultsLayout?.setOnRefreshListener(OnRefreshListener { readEvents() })
+        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { readEvents() })
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -82,11 +82,11 @@ class EventsFragment
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        _readEvents()
+        readEvents()
         return view
     }
 
-    private fun _readEvents() {
+    private fun readEvents() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Events").child(
             firebaseUser?.uid.toString()
@@ -103,14 +103,14 @@ class EventsFragment
                 gridEvents?.adapter = myEventsAdapter
                 Log.v(ContentValues.TAG, "mevent=" + mEvents)
                 /** On liste tout les evenements  */
-                _placeEventsOnList()
+                placeEventsOnList()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _placeEventsOnList() {
+    private fun placeEventsOnList() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mEvents != null) {
@@ -123,35 +123,6 @@ class EventsFragment
                 noResultsLayout?.visibility = View.VISIBLE
                 noResultsLayout?.isRefreshing = false
             }
-        }
-    }
-
-    /**
-     * print loader
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private fun _showProgress(show: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-            mSwipeRefreshLayout!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-                }
-            })
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mProgressView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-                }
-            })
-        } else {
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
         }
     }
 }

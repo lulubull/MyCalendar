@@ -42,9 +42,9 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
                 .child("requests").child("from").child(firebaseUser.getUid())
         holder.username.setText(userModel.username)
         if (userModel.imageURL.equals("default")) {
-            holder.profile_image.setImageResource(R.mipmap.ic_launcher)
+            holder.profileImage.setImageResource(R.mipmap.ic_launcher)
         } else {
-            Glide.with(mContext!!).load(userModel.imageURL).into(holder.profile_image)
+            Glide.with(mContext!!).load(userModel.imageURL).into(holder.profileImage)
         }
         referenceTo.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -135,7 +135,7 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
         var username: TextView
         var requestAcceptedTextView: TextView
         var message: TextView
-        var profile_image: ImageView
+        var profileImage: ImageView
         var cancelButton: Button
         var deleteButton: Button
 
@@ -143,7 +143,7 @@ class EventsRequestSendedAdapter(mContext: Context?, mUserModels: List<UserModel
             username = itemView.findViewById<TextView>(R.id.username)
             requestAcceptedTextView = itemView.findViewById<TextView>(R.id.requestAcceptedTextView)
             message = itemView.findViewById<TextView>(R.id.message)
-            profile_image = itemView.findViewById(R.id.profile_image)
+            profileImage = itemView.findViewById(R.id.profile_image)
             cancelButton = itemView.findViewById(R.id.cancelButton)
             deleteButton = itemView.findViewById(R.id.deleteButton)
         }

@@ -10,12 +10,11 @@ import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.etna.mycalendar.R
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_events_messagerie.*
 import java.util.ArrayList
 
 class DisplayEventsFragment : Fragment() {
 
-    fun DisplayEventsFragment() {}
+    fun displayEventsFragment() {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +32,7 @@ class DisplayEventsFragment : Fragment() {
         val viewPagerAdapter = ViewPagerAdapter(childFragmentManager)
         viewPagerAdapter.addFragment(EventsFragment(), "Evenements")
         viewPagerAdapter.addFragment(DisplayUsersFragment(), "Utilisateurs")
-        viewPagerAdapter.addFragment(DisplayFoyerFragment(), "Foyer")
+        viewPagerAdapter.addFragment(DisplayGroupeFragment(), "Groupe")
         viewPager.adapter = viewPagerAdapter
         tabLayout.setupWithViewPager(viewPager)
         return view

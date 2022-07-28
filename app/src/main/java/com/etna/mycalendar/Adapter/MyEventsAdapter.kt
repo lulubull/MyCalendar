@@ -1,6 +1,5 @@
 package com.etna.mycalendar.Adapter
 
-import android.content.ContentValues
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
@@ -61,7 +60,7 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
         holder.principalRelativeLayout.setBackgroundColor(Color.parseColor("#9B59B6"))
         for (value in eventsModel?.sharedWith!!) {
             Log.d("contentValue", "" + value)
-            _getUsername(holder, value.toString(), builder)
+            getUsername(holder, value.toString(), builder)
         }
         holder.sharedWithTextView.text = "Partagé avec :"
         holder.sharedWithTextView.visibility = View.VISIBLE
@@ -113,7 +112,7 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
         }
     }
 
-    private fun _getUsername(
+    private fun getUsername(
         holder: ViewHolder,
         valueReceived: String,
         builderReceived: StringBuilder

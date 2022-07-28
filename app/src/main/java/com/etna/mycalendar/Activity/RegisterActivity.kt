@@ -66,7 +66,7 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
             val txtTownName: String = townName.getText().toString()
             val txtTelephone: String = numeroTelephoneET.getText().toString()
             val txtPassword: String = passwordTxt.getText().toString()
-            _registrationProcess(
+            registrationProcess(
                 txtUsername,
                 txtEmail,
                 txtPassword,
@@ -83,7 +83,7 @@ class RegisterActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener
         })
     }
 
-    private fun _registrationProcess(
+    private fun registrationProcess(
         username: String,
         email: String,
         password: String,

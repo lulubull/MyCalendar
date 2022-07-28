@@ -11,7 +11,6 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,8 +111,8 @@ class DisplayUsersFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
         })
-        noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
-        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
+        noResultsLayout?.setOnRefreshListener(OnRefreshListener { readUsers() })
+        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { readUsers() })
 
         // callback for last frag used
         val callback: OnBackPressedCallback =
@@ -125,11 +124,11 @@ class DisplayUsersFragment : Fragment() {
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-        _readUsers()
+        readUsers()
         return view
     }
 
-    private fun _readUsers() {
+    private fun readUsers() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
@@ -145,13 +144,13 @@ class DisplayUsersFragment : Fragment() {
                 gridViewUsers?.layoutManager = GridLayoutManager(context, 2)
                 DisplayUsersAdapter(context, mUsers).also { displayUsersAdapter = it }
                 gridViewUsers?.adapter = displayUsersAdapter
-                _placeMarkersOnMap()
+                placeMarkersOnMap()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _placeMarkersOnMap() {
+    private fun placeMarkersOnMap() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mUsers!!.size > 0) {
@@ -253,34 +252,5 @@ class DisplayUsersFragment : Fragment() {
         val canvas = Canvas(bitmap)
         vectorDrawable.draw(canvas)
         return BitmapDescriptorFactory.fromBitmap(bitmap)
-    }
-
-    /**
-     * print loader
-    */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private fun _showProgress(show: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-            mSwipeRefreshLayout!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 0 else 1.toInt()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-                }
-            })
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mProgressView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 0 else 1.toInt()) as Int).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-                }
-            })
-        } else {
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-        }
     }
 }

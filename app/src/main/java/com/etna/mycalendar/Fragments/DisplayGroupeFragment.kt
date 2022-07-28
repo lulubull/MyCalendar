@@ -21,20 +21,20 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener
-import com.etna.mycalendar.Adapter.DisplayFoyerAdapter
+import com.etna.mycalendar.Adapter.DisplayGroupeAdapter
 import com.etna.mycalendar.Models.UserModel
 import com.etna.mycalendar.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import java.util.ArrayList
 
-class DisplayFoyerFragment
+class DisplayGroupeFragment
     : Fragment() {
     private var filterButton: Button? = null
     private var scrollView: NestedScrollView? = null
     private var frameLayoutMap: FrameLayout? = null
     private var gridViewUsers: RecyclerView? = null
-    private var displayFoyerAdapter: DisplayFoyerAdapter? = null
+    private var displayGroupeAdapter: DisplayGroupeAdapter? = null
     private var mUsers: MutableList<UserModel?>? = null
     private var mUsersId: MutableList<String?>? = null
     private var mSwipeRefreshLayout: SwipeRefreshLayout? = null
@@ -47,7 +47,7 @@ class DisplayFoyerFragment
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view: View = inflater.inflate(R.layout.fragment_display_foyer, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_display_groupe, container, false)
         filterButton = view.findViewById(R.id.filterButton)
         scrollView = view.findViewById(R.id.scrollView)
         frameLayoutMap = view.findViewById(R.id.frameLayoutMap)
@@ -69,8 +69,8 @@ class DisplayFoyerFragment
                 Toast.LENGTH_SHORT
             ).show()
         })
-        noResultsLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
-        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { _readUsers() })
+        noResultsLayout?.setOnRefreshListener(OnRefreshListener { readUsers() })
+        mSwipeRefreshLayout?.setOnRefreshListener(OnRefreshListener { readUsers() })
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
@@ -80,17 +80,17 @@ class DisplayFoyerFragment
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(this, callback)
-        _readUsers()
+        readUsers()
         return view
     }
 
-    private fun _readUsers() {
+    private fun readUsers() {
         mUsers!!.clear()
         mUsersId!!.clear()
-        _getFromTable()
+        getFromTable()
     }
 
-    private fun _placeUsersOnList() {
+    private fun placeUsersOnList() {
         val activity: Activity? = activity
         if (isAdded && activity != null) {
             if (mUsers!!.size > 0) {
@@ -106,36 +106,7 @@ class DisplayFoyerFragment
         }
     }
 
-    /**
-     * Print loader
-     */
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    private fun _showProgress(show: Boolean) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            val shortAnimTime = resources.getInteger(android.R.integer.config_shortAnimTime)
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-            mSwipeRefreshLayout!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat())).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-                }
-            })
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mProgressView!!.animate().setDuration(shortAnimTime.toLong()).alpha(
-                ((if (show) 1 else 0.toFloat())).toFloat()
-            ).setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-                }
-            })
-        } else {
-            mProgressView!!.visibility = if (show) View.VISIBLE else View.GONE
-            mSwipeRefreshLayout!!.visibility = if (show) View.GONE else View.VISIBLE
-        }
-    }
-
-    private fun _getFromTable() {
+    private fun getFromTable() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val referenceFrom = FirebaseDatabase.getInstance().getReference("Users").child(
             firebaseUser!!.uid
@@ -151,14 +122,14 @@ class DisplayFoyerFragment
                         mUsersId!!.add(userId)
                     }
                 }
-                _getToTable()
+                getToTable()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _getToTable() {
+    private fun getToTable() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val referenceTo = FirebaseDatabase.getInstance().getReference("Users").child(
             firebaseUser!!.uid
@@ -174,14 +145,14 @@ class DisplayFoyerFragment
                         mUsersId!!.add(userId)
                     }
                 }
-                _getFinalUsers()
+                getFinalUsers()
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _getFinalUsers() {
+    private fun getFinalUsers() {
         val firebaseUser = FirebaseAuth.getInstance().currentUser
         val reference = FirebaseDatabase.getInstance().getReference("Users")
         reference.addValueEventListener(object : ValueEventListener {
@@ -195,7 +166,7 @@ class DisplayFoyerFragment
                         }
                     }
                     if (mUsers!!.size == mUsersId!!.size) {
-                        _setUsersOnListAndAdapter()
+                        setUsersOnListAndAdapter()
                         break
                     }
                 }
@@ -204,10 +175,10 @@ class DisplayFoyerFragment
         })
     }
 
-    private fun _setUsersOnListAndAdapter() {
+    private fun setUsersOnListAndAdapter() {
         gridViewUsers!!.layoutManager = GridLayoutManager(context, 2)
-        displayFoyerAdapter = context?.let { DisplayFoyerAdapter(it, mUsers) }
-        gridViewUsers!!.adapter = displayFoyerAdapter
-        _placeUsersOnList()
+        displayGroupeAdapter = context?.let { DisplayGroupeAdapter(it, mUsers) }
+        gridViewUsers!!.adapter = displayGroupeAdapter
+        placeUsersOnList()
     }
 }

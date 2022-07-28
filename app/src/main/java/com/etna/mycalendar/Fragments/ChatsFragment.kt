@@ -26,7 +26,7 @@ class ChatsFragment : Fragment() {
     private var recyclerView: RecyclerView? = null
     private var userAdapter: UserAdapter? = null
     private var mUserModels: MutableList<UserModel?>? = null
-    private var search_users: EditText? = null
+    private var searchUsers: EditText? = null
     private var searchUserParced: String? = null
     private var fuser: FirebaseUser? = null
     private var reference: DatabaseReference? = null
@@ -54,32 +54,32 @@ class ChatsFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view)
         recyclerView?.setHasFixedSize(true)
         recyclerView?.setLayoutManager(LinearLayoutManager(context))
-        search_users = view.findViewById<EditText>(R.id.search_users)
+        searchUsers = view.findViewById<EditText>(R.id.search_users)
         fuser = FirebaseAuth.getInstance().getCurrentUser()
         usersList = ArrayList<ChatListModel>()
-        search_users?.addTextChangedListener(object : TextWatcher {
+        searchUsers?.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                _searchUsers(charSequence.toString().toLowerCase())
+                searchUsers(charSequence.toString().toLowerCase())
                 searchUserParced = charSequence.toString().toLowerCase()
             }
 
             override fun afterTextChanged(editable: Editable) {
-                _searchUsers(searchUserParced)
+                searchUsers(searchUserParced)
             }
         })
-        _getUserChatList()
-        _updateToken(FirebaseInstanceId.getInstance().getToken().toString())
+        getUserChatList()
+        updateToken(FirebaseInstanceId.getInstance().getToken().toString())
         return view
     }
 
-    private fun _updateToken(token: String) {
+    private fun updateToken(token: String) {
         val reference: DatabaseReference = FirebaseDatabase.getInstance().getReference("Tokens")
         val token1 = Token(token)
         reference.child(fuser?.getUid().toString()).setValue(token1)
     }
 
-    private fun _chatList() {
+    private fun chatList() {
         mUserModels = ArrayList<UserModel?>()
         reference = FirebaseDatabase.getInstance().getReference("Users")
         reference?.addValueEventListener(object : ValueEventListener {
@@ -95,14 +95,14 @@ class ChatsFragment : Fragment() {
                 }
                 userAdapter = UserAdapter(context!!, mUserModels, true)
                 recyclerView?.setAdapter(userAdapter)
-                _updateToken(FirebaseInstanceId.getInstance().getToken().toString())
+                updateToken(FirebaseInstanceId.getInstance().getToken().toString())
             }
 
             override fun onCancelled(databaseError: DatabaseError) {}
         })
     }
 
-    private fun _searchUsers(s: String?) {
+    private fun searchUsers(s: String?) {
         val query: Query =
             FirebaseDatabase.getInstance().getReference("Users").orderByChild("search")
                 .startAt(s)
@@ -126,7 +126,7 @@ class ChatsFragment : Fragment() {
         })
     }
 
-    private fun _getUserChatList() {
+    private fun getUserChatList() {
         reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(fuser?.getUid().toString())
         reference?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -135,7 +135,7 @@ class ChatsFragment : Fragment() {
                     val chatListModel: ChatListModel? = snapshot.getValue(ChatListModel::class.java)
                     usersList!!.add(chatListModel!!)
                 }
-                _chatList()
+                chatList()
             }
             override fun onCancelled(databaseError: DatabaseError) {}
         })
