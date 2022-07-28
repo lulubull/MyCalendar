@@ -58,7 +58,7 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
         holder.principalLinearLayout.setBackgroundColor(Color.parseColor("#9B59B6"))
         holder.secondaryLinearLayout.setBackgroundColor(Color.parseColor("#9B59B6"))
         holder.principalRelativeLayout.setBackgroundColor(Color.parseColor("#9B59B6"))
-        for (value in eventsModel?.sharedWith!!) {
+        for (value in eventsModel?.sharedWith!!.values) {
             Log.d("contentValue", "" + value)
             getUsername(holder, value.toString(), builder)
         }
@@ -124,8 +124,9 @@ class MyEventsAdapter(mContext: Context?, mEvents: MutableList<MyEventsModel?>?)
                 for (snapshot in dataSnapshot.children) {
                     val userInfo: UserModel? = snapshot.getValue(UserModel::class.java)
                     if (userInfo?.id.equals(valueReceived)) {
+                        Log.d("FireUser", userInfo.toString())
                         builderReceived.append(userInfo?.username)
-                        builderReceived.append(" ")
+                        builderReceived.append(", ")
                         holder.sharedWith.text = builderReceived.toString()
                     }
                 }

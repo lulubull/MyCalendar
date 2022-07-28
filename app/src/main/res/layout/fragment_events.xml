@@ -22,28 +22,30 @@
         android:visibility="visible">
 
         <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:id="@+id/filterButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/filterButton"
-            android:text="Filtrer"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_generic_ui"
+            android:text="Filtrer"
             android:textColor="#fff"
-            android:background="@drawable/bg_button_generic_ui"/>
+            tools:ignore="TouchTargetSizeCheck" />
 
         <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:id="@+id/addEventButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:id="@+id/addEventButton"
-            android:text="Ajouter un evenement"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button_generic_ui"
+            android:text="Ajouter un evenement"
             android:textColor="#fff"
-            android:background="@drawable/bg_button_generic_ui"/>
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 
